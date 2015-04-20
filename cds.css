@@ -20,3 +20,20 @@
   border: 1px solid #666;
   margin-bottom: 40px;
 }
+
+.resourcetype {
+  color:#999;
+}
+
+.serptop {
+  width:200px;
+  height:200px;
+  background-color:#666;
+}
+.serpbottom {
+  width:200px;
+  height:80px;
+  border:1px solid #666;
+  padding:5px;
+  margin-bottom:50px;
+}
