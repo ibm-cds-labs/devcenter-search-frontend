@@ -57,11 +57,11 @@
       <div class="row">
         <!-- left column -->
         <div class="col-md-12">
-          <form class="form-horizontal">
+          <form class="form-horizontal" onsubmit="return submitForm()">
             <div class="form-group">
-               <label class="col-sm-2 control-label" for="resourcesSearch">Search</label>
+               <label class="col-sm-2 control-label" for="searchtext">Search</label>
                <div class="col-sm-10">
-                 <input type="text" class="form-control" id="resourcesSearch">
+                 <input type="text" class="form-control" id="searchtext">
                </div>
              </div
           </form>
@@ -116,6 +116,10 @@
         
           <!-- row with three search results in -->
           <div class="row">
+            <!-- results go here -->
+            <div id="results"></div>
+            
+            <!--
             <div class="col-md-3 serp">
               <div class="serptop"></div>
               <div class="serpbottom">
@@ -138,31 +142,9 @@
               </div>
             </div>
           </div> 
-          
-          <!-- row with three search results in -->
-          <div class="row">
-            <div class="col-md-3 serp">
-              <div class="serptop"></div>
-              <div class="serpbottom">
-                <h4>Location Tracker</h4>
-                <p class="resourcetype">Tutorial</p>
-              </div>
-            </div>
-            <div class="col-md-3 serp">
-              <div class="serptop"></div>
-              <div class="serpbottom">
-                <h4>Safety Pulse</h4>
-                <p class="resourcetype">Article</p>
-              </div>
-            </div>
-            <div class="col-md-3 serp">
-              <div class="serptop"></div>
-              <div class="serpbottom">
-                <h4>Replication</h4>
-                <p class="resourcetype">Video</p>
-              </div>
-            </div>
-          </div>
+              
+          -->
+        
         
         </div> <!-- right column-->
       </div>
