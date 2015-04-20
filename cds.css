@@ -1,0 +1,22 @@
+.spacer {
+  height:150px;
+}
+
+#bigsearchinput {
+  width:90%;
+}
+
+.searchdiv {
+  width:100%;
+}
+
+.innersearchdiv {
+  width:90%;
+}
+
+.menublock {
+  width:120px;
+  height:120px;
+  border: 1px solid #666;
+  margin-bottom: 40px;
+}
