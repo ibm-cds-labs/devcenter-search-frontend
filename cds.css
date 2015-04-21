@@ -6,6 +6,10 @@
   height:50px;
 }
 
+.muted {
+  color:#ccc;
+}
+
 #bigsearchinput {
   width:90%;
 }

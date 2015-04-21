@@ -60,9 +60,37 @@ var doSearch = function(searchText,filter, callback) {
   
 };
 
+var renderFacetGroup = function(facet, title, datacounts) {
+  var html = '<h4>' + title + '</h4>';
+  for(var j in allfacets[facet]) {
+    var live = false;
+    if(datacounts[facet][j]) {
+      live = true;
+    }
+    html += '<div class="row">';
+    html += '<div class="col-xs-2"><input type="checkbox" onclick="checktick(this)"';
+    html += ' data-facet="'+facet+'" data-value="' + j + '"';
+    if(!live) {
+      html += " disabled";
+    }
+    if(filter[facet] && filter[facet] == j) {
+      html += " checked";
+    }
+    html +='></div>';
+    html += '<div class="col-xs-10">';
+    var theclass = "";
+    if(!live) {
+      theclass = "muted";
+    }
+    html += '<span class="' + theclass + '">' + j + '</span>';    
+    html += '</div>';    
+    html += '</div>';    
+  }
+  return html;
+}
 
 // render the search results 'data' as HTML
-var renderSerps = function(data) {
+var renderSerps = function(data, filter) {
   
   // render docs
   var html = "";
@@ -78,68 +106,13 @@ var renderSerps = function(data) {
   
   // render facets
   var html ="";
-  html += '<h3>Type</h3>';
-  for(var j in data.counts.type) {
-    html += '<div class="row">';
-    html += '<div class="col-xs-2"><input type="checkbox"></div>';
-    html += '<div class="col-xs-10">';
-    html += '<a href="Javascript:applyFilter(\'type\',\'' + j + '\')">';
-    html +=  j;    
-    html += '</a>';
-    html += '</div>';    
-    html += '</div>';    
-  }
-  html += '<h3>Topics</h3>';
-  for(var j in data.counts.topic) {
-    html += '<div class="row">';
-    html += '<div class="col-xs-2"><input type="checkbox"></div>';
-    html += '<div class="col-xs-10">';
-    
-    html += '<a href="Javascript:applyFilter(\'topic\',\'' + j + '\')">';
-    html += j
-    html += '</a>'
-    html += '</div>';    
-    html += '</div>';    
-        
-  }
-  html += '<h3>Technologies</h3>';
-  for(var j in data.counts.technology) {
-    html += '<div class="row">';
-    html += '<div class="col-xs-2"><input type="checkbox"></div>';
-    html += '<div class="col-xs-10">';
-    
-    html += '<a href="Javascript:applyFilter(\'technology\',\'' + j + '\')">';
-    html += j;   
-    html += '</a>'
-    html += '</div>';    
-    html += '</div>';    
-        
-  }
-  html += '<h3>Language</h3>';
-  for(var j in data.counts.language) {
-    html += '<div class="row">';
-    html += '<div class="col-xs-2"><input type="checkbox"></div>';
-    html += '<div class="col-xs-10">';
-    html += '<a href="Javascript:applyFilter(\'language\',\'' + j + '\')">';
-    html += j    
-    html += '</a>'
-    html += '</div>';    
-    html += '</div>';    
-        
-  }
-  html += '<h3>Level</h3>';
-  for(var j in data.counts.level) {
-    html += '<div class="row">';
-    html += '<div class="col-xs-2"><input type="checkbox"></div>';
-    html += '<div class="col-xs-10">';
-    
-    html += '<a href="Javascript:applyFilter(\'level\',\'' + j + '\')">';
-    html += j    
-    html += '</a>'
-    html += '</div>';    
-    html += '</div>';    
-        
-  }
+  
+  html += renderFacetGroup("type","Type",data.counts);
+  html += renderFacetGroup("topic","Topics",data.counts);
+  html += renderFacetGroup("technology","Technologies",data.counts);
+  html += renderFacetGroup("language","Languages",data.counts);
+  html += renderFacetGroup("level","Levels",data.counts);
+
   $('#facets').html(html);
 }
 
@@ -148,7 +121,7 @@ var applyFilter = function(key, value) {
   filter[key] = value;
   var searchText = $('#searchtext').val();
   doSearch(searchText, filter, function(err, data) {
-    renderSerps(data);
+    renderSerps(data, filter);
   });
 }
 
@@ -158,7 +131,7 @@ var submitForm = function() {
   filter = {}; // clear any filters
   var searchText = $('#searchtext').val();
   doSearch(searchText, filter, function(err, data){
-    renderSerps(data);
+    renderSerps(data, filter);
   });
   return false;
 }
@@ -169,9 +142,24 @@ var onload = function() {
   searchText = "";
   filter = { };
   var facets = doSearch(searchText, filter, function(err, data) {
-    allfacets = data.facets;
-    renderSerps(data);
+    allfacets = data.counts; // record the inital list of facets away for safekeeping
+    renderSerps(data,filter);
   });
+}
+
+var checktick = function(ctrl) {
+  var facet = ctrl.getAttribute('data-facet');
+  var value = ctrl.getAttribute('data-value');
+  var checked = $(ctrl).is(":checked");
+  if(checked) {
+    applyFilter(facet, value);
+  } else {
+    delete filter[facet];
+    doSearch(searchText, filter, function(err, data) {
+      renderSerps(data, filter);
+    });
+  }
+  
 }
 
 $(document).ready(onload);
