@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="cds.css">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="cds-tools.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -45,7 +46,7 @@
       
       <!-- home page search form -->
       <div class="center-block searchdiv">
-        <form class="form-inline" >
+        <form class="form-inline" onsubmit="return indexSearchSubmit();">
           <div class="form-group innersearchdiv">
             <input type="text" class="form-control" id="bigsearchinput">
           </div>
