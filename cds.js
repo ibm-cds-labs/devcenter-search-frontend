@@ -27,7 +27,7 @@ var doSearch = function(searchText,filter, callback) {
   // add filter to the query string - filter is an array of stuff
   for(var i in filter) {
     q += " AND ";
-    q += filter[i].key + ":" + filter[i].value;
+    q += filter[i].key + ":" + sanitise(filter[i].value);
   }
   
   // render the query and filter
@@ -99,7 +99,6 @@ var renderSerps = function(data, filter) {
     var doc = data.rows[i].doc;
     html += '<div class="row">';
     html += '<div class="col-xs-2">';
-    console.log(data.rows[i].doc)
     switch(data.rows[i].doc.type) {
       case "Video":                    
         html += '<span class="typeicon glyphicon-facetime-video"></span>';
