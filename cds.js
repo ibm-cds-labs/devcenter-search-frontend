@@ -7,7 +7,7 @@ var allfacets = {};
 var sanitise = function(str) {
   var s = str.replace(/'/g,"");
   s = s.replace(/\W/g," ");
-  return "'" + s + "'";
+  return '"' + s + '"';
 }
 
 
