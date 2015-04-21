@@ -8,7 +8,7 @@ var generateQueryString = function(searchText, filter) {
     qs += "searchText="+encodeURIComponent(searchText);
   }
   if(filter && filter.length>0) {
-    qs += "&filter="+JSON.stringify(filter);
+    qs += "&filter="+encodeURIComponent(JSON.stringify(filter));
   }
   return qs;
 }

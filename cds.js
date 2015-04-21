@@ -274,20 +274,6 @@ var clearAllFilters = function() {
   submitForm();
 }
 
-
-var generateQueryString = function(searchText, filter) {
-  var qs = ""
-  
-  if(searchText && searchText.length>0) {
-    qs += "searchText="+encodeURIComponent(searchText);
-  }
-  if(filter && filter.length>0) {
-    qs += "&filter="+JSON.stringify(filter);
-  }
-  return qs;
-}
-
-
 // onload perform a search for "everything"
 var onload = function() {
   searchText = "";
