@@ -10,6 +10,10 @@
   color:#ccc;
 }
 
+.clearall {
+  height:30px;
+}
+
 #bigsearchinput {
   width:90%;
 }

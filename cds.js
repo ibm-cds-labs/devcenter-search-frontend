@@ -107,7 +107,11 @@ var renderSerps = function(data, filter) {
   
   // render facets
   var html ="";
-  
+  html += '<div class="clearall">';
+  if(filter.length > 0) {
+    html += '<a href="Javascript:clearAllFilters()">Clear</a>';
+  }
+  html += '</div>';
   html += renderFacetGroup("type","Type",data.counts);
   html += renderFacetGroup("topic","Topics",data.counts);
   html += renderFacetGroup("technology","Technologies",data.counts);
@@ -160,6 +164,10 @@ var submitForm = function() {
     renderSerps(data, filter);
   });
   return false;
+}
+
+var clearAllFilters = function() {
+  submitForm();
 }
 
 
