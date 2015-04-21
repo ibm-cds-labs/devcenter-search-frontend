@@ -1,6 +1,6 @@
 
 // the current state of the fiter
-var filter = { };
+var filter = [];
 var allfacets = {};
 
 // sanitise a string so that it can be used safely in a Lucene search
@@ -27,7 +27,7 @@ var doSearch = function(searchText,filter, callback) {
   // add filter to the query string - filter is an array of stuff
   for(var i in filter) {
     q += " AND ";
-    q += i + ":" + filter[i];
+    q += filter[i].key + ":" + filter[i].value;
   }
   
   // render the query and filter
@@ -60,6 +60,7 @@ var doSearch = function(searchText,filter, callback) {
   
 };
 
+// render a list of facets from the object 'datacounts' using the item 'facet'.
 var renderFacetGroup = function(facet, title, datacounts) {
   var html = '<h4>' + title + '</h4>';
   for(var j in allfacets[facet]) {
@@ -73,7 +74,7 @@ var renderFacetGroup = function(facet, title, datacounts) {
     if(!live) {
       html += " disabled";
     }
-    if(filter[facet] && filter[facet] == j) {
+    if(isFilterSelected(facet, j)) {
       html += " checked";
     }
     html +='></div>';
@@ -118,17 +119,42 @@ var renderSerps = function(data, filter) {
 
 // apply a new filter
 var applyFilter = function(key, value) {
-  filter[key] = value;
+  var newfilter = { key: key, value:value};
+  filter.push(newfilter);
   var searchText = $('#searchtext').val();
   doSearch(searchText, filter, function(err, data) {
     renderSerps(data, filter);
   });
 }
 
+// remove a filter
+var removeFilter = function(key, value) {
+  for(var i in filter) {
+    if(filter[i].key == key && filter[i].value==value) {
+      filter.splice(i,1);
+      break;
+    }
+  }
+  var searchText = $('#searchtext').val();
+  doSearch(searchText, filter, function(err, data) {
+    renderSerps(data, filter);
+  });
+}
+
+// check whether a filter is currently selected or not
+var isFilterSelected = function(key, value) {
+  for(var i in filter) {
+    if(filter[i].key == key && filter[i].value==value) {
+      return true;
+    }
+  }
+  return false;
+}
+
 // when the search form is submitted, clear any existing filters
 // and do the search
 var submitForm = function() {
-  filter = {}; // clear any filters
+  filter = []; // clear any filters
   var searchText = $('#searchtext').val();
   doSearch(searchText, filter, function(err, data){
     renderSerps(data, filter);
@@ -140,7 +166,7 @@ var submitForm = function() {
 // onload perform a search for "everything"
 var onload = function() {
   searchText = "";
-  filter = { };
+  filter = [];
   var facets = doSearch(searchText, filter, function(err, data) {
     allfacets = data.counts; // record the inital list of facets away for safekeeping
     renderSerps(data,filter);
@@ -154,10 +180,7 @@ var checktick = function(ctrl) {
   if(checked) {
     applyFilter(facet, value);
   } else {
-    delete filter[facet];
-    doSearch(searchText, filter, function(err, data) {
-      renderSerps(data, filter);
-    });
+    removeFilter(facet, value);
   }
   
 }
