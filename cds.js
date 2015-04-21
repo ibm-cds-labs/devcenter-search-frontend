@@ -97,9 +97,32 @@ var renderSerps = function(data, filter) {
   var html = "";
   for(var i in data.rows) {
     var doc = data.rows[i].doc;
-    html += '<div class="alert">';
+    html += '<div class="row">';
+    html += '<div class="col-xs-2">';
+    console.log(data.rows[i].doc)
+    switch(data.rows[i].doc.type) {
+      case "Video":                    
+        html += '<span class="typeicon glyphicon-facetime-video"></span>';
+        break;                         
+      case "Article":                  
+        html += '<span class="typeicon glyphicon glyphicon-book"></span>';
+        break;                         
+      case "Tutorial":                 
+        html += '<span class="typeicon glyphicon glyphicon glyphicon-list"></span>';
+        break;
+    }
+    html += '</div>';
+    html += '<div class="col-xs-8">'
     html += '<h3><a href="' + doc.url + '" target="_new">'+doc.name+'</a></h3>';
     html += '<div class="description">' + doc.description + '</div>';
+    html += '</div>';
+    html += '<div class="col-xs-1">'
+    html += '<span class="shareicon glyphicon glyphicon glyphicon-share-alt"></span>';    
+    html += '</div>';
+    html += '<div class="col-xs-1">'
+    html += '<span class="shareicon glyphicon glyphicon glyphicon-share"></span>';    
+    html += '</div>';
+    
     html += '</div>';
   }
   

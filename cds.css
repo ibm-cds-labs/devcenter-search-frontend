@@ -14,6 +14,16 @@
   height:30px;
 }
 
+.typeicon {
+  font-size: 48px;
+  text-align:center;
+  padding-top:50px;
+  min-height:150px;
+  width:100%;
+}
+.shareicon {
+  padding-top:50px;
+}
 #bigsearchinput {
   width:90%;
 }
