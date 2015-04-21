@@ -101,7 +101,7 @@ var renderSerps = function(data, filter) {
     html += '<div class="col-xs-2">';
     switch(data.rows[i].doc.type) {
       case "Video":                    
-        html += '<span class="typeicon glyphicon-facetime-video"></span>';
+        html += '<span class="typeicon glyphicon glyphicon-facetime-video"></span>';
         break;                         
       case "Article":                  
         html += '<span class="typeicon glyphicon glyphicon-book"></span>';
