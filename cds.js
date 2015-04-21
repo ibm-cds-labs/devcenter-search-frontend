@@ -58,22 +58,6 @@ var doSearch = function() {
       html += '<div class="alert">';
       html += '<h3><a href="' + doc.url + '" target="_new">'+doc.name+'</a></h3>';
       html += '<div class="description">' + doc.description + '</div>';
-      html += '<span class="label label-default sep">' + doc.type + '</span>'
-      for(var j in doc.topic) {
-        html += '<span class="label label-primary sep">' + doc.topic[j] + '</span>'
-      }
-      for(var j in doc.technologies) {
-        html += '<span class="label label-success sep">' + doc.technologies[j] + '</span>'
-      }
-      if(doc.languages && doc.languages.length>0) {
-        for(var j in doc.languages) {
-          html += '<span class="label label-info sep">' + doc.languages[j] + '</span>'
-        }
-      }
-      if(doc.level) {
-        html += '<span class="label label-warning sep">' + doc.level + '</span>'
-      }
-     
       html += '</div>';
     }
     
@@ -83,33 +67,65 @@ var doSearch = function() {
     var html ="";
     html += '<h3>Type</h3>';
     for(var j in data.counts.type) {
+      html += '<div class="row">';
+      html += '<div class="col-xs-2"><input type="checkbox"></div>';
+      html += '<div class="col-xs-10">';
       html += '<a href="Javascript:applyFilter(\'type\',\'' + j + '\')">';
-      html += '<span class="label label-default sep">' + j + '(' + data.counts.type[j] +  ')</span>'    
-      html += '</a><br>'    
+      html +=  j;    
+      html += '</a>';
+      html += '</div>';    
+      html += '</div>';    
     }
     html += '<h3>Topics</h3>';
     for(var j in data.counts.topic) {
+      html += '<div class="row">';
+      html += '<div class="col-xs-2"><input type="checkbox"></div>';
+      html += '<div class="col-xs-10">';
+      
       html += '<a href="Javascript:applyFilter(\'topic\',\'' + j + '\')">';
-      html += '<span class="label label-primary sep">' + j + '(' + data.counts.topic[j] +  ')</span>';
-      html += '</a><br>'    
+      html += j
+      html += '</a>'
+      html += '</div>';    
+      html += '</div>';    
+          
     }
     html += '<h3>Technologies</h3>';
     for(var j in data.counts.technology) {
+      html += '<div class="row">';
+      html += '<div class="col-xs-2"><input type="checkbox"></div>';
+      html += '<div class="col-xs-10">';
+      
       html += '<a href="Javascript:applyFilter(\'technology\',\'' + j + '\')">';
-      html += '<span class="label label-success sep">' + j + '(' + data.counts.technology[j] +  ')</span>'    
-      html += '</a><br>'    
+      html += j;   
+      html += '</a>'
+      html += '</div>';    
+      html += '</div>';    
+          
     }
     html += '<h3>Language</h3>';
     for(var j in data.counts.language) {
+      html += '<div class="row">';
+      html += '<div class="col-xs-2"><input type="checkbox"></div>';
+      html += '<div class="col-xs-10">';
       html += '<a href="Javascript:applyFilter(\'language\',\'' + j + '\')">';
-      html += '<span class="label label-info sep">' + j + '(' + data.counts.language[j] +  ')</span>'    
-      html += '</a><br>'    
+      html += j    
+      html += '</a>'
+      html += '</div>';    
+      html += '</div>';    
+          
     }
     html += '<h3>Level</h3>';
     for(var j in data.counts.level) {
+      html += '<div class="row">';
+      html += '<div class="col-xs-2"><input type="checkbox"></div>';
+      html += '<div class="col-xs-10">';
+      
       html += '<a href="Javascript:applyFilter(\'level\',\'' + j + '\')">';
-      html += '<span class="label label-warning sep">' + j + '(' + data.counts.level[j] +  ')</span>'    
-      html += '</a><br>'    
+      html += j    
+      html += '</a>'
+      html += '</div>';    
+      html += '</div>';    
+          
     }
     $('#facets').html(html);
 
