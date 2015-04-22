@@ -159,7 +159,7 @@ var renderFacetGroup = function(facet, title, datacounts) {
       live = true;
     }
     html += '<div class="row">';
-    html += '<div class="col-xs-2"><input id="facet' + i + '" type="checkbox" onclick="checktick(this)"';
+    html += '<div class="col-xs-2"><input id="facet' + facet+i + '" type="checkbox" onclick="checktick(this)"';
     html += ' data-facet="'+facet+'" data-value="' + j + '"';
     if(!live) {
       html += " disabled";
@@ -173,7 +173,7 @@ var renderFacetGroup = function(facet, title, datacounts) {
     if(!live) {
       c = "muted";
     }
-    html += '<label for="facet'+i+'" class="'+ c+ '">' + j + '</label>';    
+    html += '<label for="facet'+facet+i+'" class="'+ c+ '">' + j + '</label>';    
     html += '</div>';    
     html += '</div>';    
     i++;
