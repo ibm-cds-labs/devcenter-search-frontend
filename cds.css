@@ -26,6 +26,9 @@ h1 {
 .shareicon {
   padding-top:50px;
 }
+
+.sep { margin-right: 10px}
+
 #bigsearchinput {
   width:90%;
 }

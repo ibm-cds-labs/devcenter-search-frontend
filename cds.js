@@ -205,6 +205,20 @@ var renderSerps = function(data, filter) {
     html += '<div class="col-xs-8">'
     html += '<h3><a href="' + doc.url + '" target="_new">'+doc.name+'</a></h3>';
     html += '<div class="description">' + doc.description + '</div>';
+    for(var j in doc.topic) {
+      html += '<span class="label label-primary sep">' + doc.topic[j] + '</span>'
+    }
+    for(var j in doc.technologies) {
+      html += '<span class="label label-success sep">' + doc.technologies[j] + '</span>'
+    }
+    if(doc.languages && doc.languages.length>0) {
+      for(var j in doc.languages) {
+        html += '<span class="label label-info sep">' + doc.languages[j] + '</span>'
+      }
+    }
+    if(doc.level) {
+      html += '<span class="label label-warning sep">' + doc.level + '</span>'
+    }
     html += '</div>';
     html += '<div class="col-xs-1">'
     html += '<span class="shareicon glyphicon glyphicon glyphicon-share-alt"></span>';    
