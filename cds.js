@@ -118,7 +118,7 @@ var doSearch = function(searchText,filter, callback) {
   
   // render the query and filter
   $('#qs').html(q);  
-  var limit = 5;      
+  var limit = 20;      
   var qs = {
       q:q,
       limit:limit,
