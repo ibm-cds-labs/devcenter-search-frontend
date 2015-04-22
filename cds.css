@@ -1,9 +1,6 @@
-.spacer {
-  height:150px;
-}
-
-.smallspacer {
-  height:50px;
+h1 {
+  margin-top:100px;
+  margin-bottom:50px;
 }
 
 .muted {
@@ -35,6 +32,8 @@
 
 .searchdiv {
   width:100%;
+  margin-top:150px;
+  margin-bottom:100px;
 }
 
 .innersearchdiv {
