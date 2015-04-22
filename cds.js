@@ -154,13 +154,14 @@ var doSearch = function(searchText,filter, callback) {
 // render a list of facets from the object 'datacounts' using the item 'facet'.
 var renderFacetGroup = function(facet, title, datacounts) {
   var html = '<h4>' + title + '</h4>';
+  var i=0;
   for(var j in allfacets[facet]) {
     var live = false;
     if(datacounts[facet][j]) {
       live = true;
     }
     html += '<div class="row">';
-    html += '<div class="col-xs-2"><input type="checkbox" onclick="checktick(this)"';
+    html += '<div class="col-xs-2"><input id="facet' + i + '" type="checkbox" onclick="checktick(this)"';
     html += ' data-facet="'+facet+'" data-value="' + j + '"';
     if(!live) {
       html += " disabled";
@@ -170,13 +171,14 @@ var renderFacetGroup = function(facet, title, datacounts) {
     }
     html +='></div>';
     html += '<div class="col-xs-10">';
-    var theclass = "";
     if(!live) {
-      theclass = "muted";
+      html += '<span class="muted">' + j + '</span>';    
+    } else {
+      html += '<a href="Javascript:forcetick(\'facet' + i +  '\')">' + j + '</a>';    
     }
-    html += '<span class="' + theclass + '">' + j + '</span>';    
     html += '</div>';    
     html += '</div>';    
+    i++;
   }
   return html;
 }
@@ -332,8 +334,20 @@ var onload = function() {
   });
 }
 
+var forcetick = function(id) {
+  var  ctrl = $('#'+id);
+  var checked = ctrl.is(":checked");
+  if(checked) {
+    ctrl.prop('checked', false);
+  } else { 
+    ctrl.prop('checked', true);
+  }
+  checktick(ctrl[0]);
+}
+
 // when a checkbox is ticked
 var checktick = function(ctrl) {
+
   var facet = ctrl.getAttribute('data-facet');
   var value = ctrl.getAttribute('data-value');
   var checked = $(ctrl).is(":checked");
