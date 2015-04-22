@@ -97,7 +97,7 @@ var disableAllCheckBoxes = function() {
 
 // perform a search for 'searchText' and optionally apply filters where
 // filter is an object like {topic: "NoSQL", language: "HTTP"}
-var doSearch = function(searchText,filter, callback) {
+var doSearch = function(searchText,filter, dontChangeURL, callback) {
   disableAllCheckBoxes();
   $('#loading').show();
   var q = "";
@@ -140,7 +140,9 @@ var doSearch = function(searchText,filter, callback) {
   
   $.ajax(obj).done(function(data) {
     var qs = generateQueryString(searchText,filter);
-    window.location.href= window.location.pathname+"#?"+qs;
+    if(!dontChangeURL) {
+      window.location.href= window.location.pathname+"#?"+qs;      
+    }
     $('#loading').hide();
     if (callback) {
       callback(null, data);
@@ -253,7 +255,7 @@ var applyFilter = function(key, value) {
   var newfilter = { key: key, value:value};
   filter.push(newfilter);
   var searchText = $('#searchtext').val();
-  doSearch(searchText, filter, function(err, data) {
+  doSearch(searchText, filter, false, function(err, data) {
     renderSerps(data, filter);
   });
 }
@@ -267,7 +269,7 @@ var removeFilter = function(key, value) {
     }
   }
   var searchText = $('#searchtext').val();
-  doSearch(searchText, filter, function(err, data) {
+  doSearch(searchText, filter, false, function(err, data) {
     renderSerps(data, filter);
   });
 }
@@ -287,7 +289,7 @@ var isFilterSelected = function(key, value) {
 var submitForm = function() {
   filter = []; // clear any filters
   var searchText = $('#searchtext').val();
-  doSearch(searchText, filter, function(err, data){
+  doSearch(searchText, filter, false, function(err, data){
     renderSerps(data, filter);
   });
   return false;
@@ -303,7 +305,7 @@ var onload = function() {
   filter = [];
   
   // do first search to get all the facets
-  doSearch(searchText, filter, function(err, data) {
+  doSearch(searchText, filter, true, function(err, data) {
     // record the inital list of facets away for safekeeping
     allfacets = data.counts; 
     renderSerps(data,filter);
@@ -320,12 +322,13 @@ var onload = function() {
       // extract search and filter
       searchText = (typeof hash.searchText=="string")?hash.searchText:"";
       filter = (typeof hash.filter == "object")?hash.filter:[];
+      console.log(searchText,filter);
       
       // feed the search box
       $('#searchtext').val(searchText);
       
       // do a second search
-      doSearch(searchText, filter, function(err, data) {
+      doSearch(searchText, filter, false, function(err, data) {
         renderSerps(data, filter);
       });
     } 
