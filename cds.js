@@ -89,9 +89,17 @@ String.prototype.queryStringToJSON = String.prototype.queryStringToJSON || funct
 	return json;
 };
 
+var disableAllCheckBoxes = function() {
+  // then disable everything, it's going to get redrawn anyway
+  $('input[type=checkbox]').prop("disabled", true);
+}
+
+
 // perform a search for 'searchText' and optionally apply filters where
 // filter is an object like {topic: "NoSQL", language: "HTTP"}
 var doSearch = function(searchText,filter, callback) {
+  disableAllCheckBoxes();
+  $('#loading').show();
   var q = "";
   var sort = null;
   if(searchText.length>0) {
@@ -135,6 +143,7 @@ var doSearch = function(searchText,filter, callback) {
     if(qs.length>0) {
       window.location.href= window.location.pathname+"#?"+qs;
     }
+    $('#loading').hide();
     if (callback) {
       callback(null, data);
     }
