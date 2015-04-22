@@ -2,6 +2,7 @@
 // the current state of the fiter
 var filter = [];
 var allfacets = {};
+var searchResults = {};
 
 // sanitise a string so that it can be used safely in a Lucene search
 var sanitise = function(str) {
@@ -179,7 +180,7 @@ var renderSerps = function(data, filter) {
   var html = "";
   for(var i in data.rows) {
     var doc = data.rows[i].doc;
-    html += '<div class="row">';
+    html += '<div class="row" data-result-index="' + i + '">';
     html += '<div class="col-xs-2">';
     switch(data.rows[i].doc.type) {
       case "Video":                    
@@ -194,7 +195,7 @@ var renderSerps = function(data, filter) {
     }
     html += '</div>';
     html += '<div class="col-xs-8">'
-    html += '<h3><a href="' + doc.url + '" target="_new">'+doc.name+'</a></h3>';
+    html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a></h3>';
     html += '<div class="description">' + doc.description + '</div>';
     html += '</div>';
     html += '<div class="col-xs-1">'
@@ -283,6 +284,7 @@ var onload = function() {
   doSearch(searchText, filter, function(err, data) {
     // record the inital list of facets away for safekeeping
     allfacets = data.counts; 
+    searchResults = data;
     renderSerps(data,filter);
 
     // parse the query string
@@ -303,11 +305,46 @@ var onload = function() {
       
       // do a second search
       doSearch(searchText, filter, function(err, data) {
+        searchResults = data;
         renderSerps(data, filter);
       });
     } 
   });
+  
+  // result click to trigger modal
+  //$("#results .row").on( "click", function() {
+  $(document).on("click", "#results .row", function(e) {
+    var resultIndex = $(this).attr('data-result-index');
+    resultModal(resultIndex);
+  });
+  
+  // Suppress anchor clicks
+  $(document).on("click", ".result_link", function(e) {
+    e.preventDefault();
+  });
+  
+  $(document).on("click", ".close-modal", function() {
+    $('.result-modal').hide();
+  });
 }
+
+// search result modal
+
+var resultModal = function(i) {
+
+  var resultContent = "";
+  
+  resultContent += '<div class="close-modal">x</div>';
+  resultContent += '<h4 class="title">' + searchResults.rows[i].doc.name + '</h4>';
+  resultContent += '<div class="description">' + searchResults.rows[i].doc.description + '</div>';
+  resultContent += '<div class="tags"></div>';
+  resultContent += '<div class="result-button"><a href="' + searchResults.rows[i].doc.url + '" target="_new">Go to result</a></div>';
+            
+  $('#result-modal-content').html(resultContent);  
+  $('.result-modal').show();
+  
+}
+
 
 // when a checkbox is ticked
 var checktick = function(ctrl) {
