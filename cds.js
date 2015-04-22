@@ -140,9 +140,7 @@ var doSearch = function(searchText,filter, callback) {
   
   $.ajax(obj).done(function(data) {
     var qs = generateQueryString(searchText,filter);
-    if(qs.length>0) {
-      window.location.href= window.location.pathname+"#?"+qs;
-    }
+    window.location.href= window.location.pathname+"#?"+qs;
     $('#loading').hide();
     if (callback) {
       callback(null, data);
@@ -171,11 +169,11 @@ var renderFacetGroup = function(facet, title, datacounts) {
     }
     html +='></div>';
     html += '<div class="col-xs-10">';
+    var c = "";
     if(!live) {
-      html += '<span class="muted">' + j + '</span>';    
-    } else {
-      html += '<a href="Javascript:forcetick(\'facet' + i +  '\')">' + j + '</a>';    
+      c = "muted";
     }
+    html += '<label for="facet'+i+'" class="'+ c+ '">' + j + '</label>';    
     html += '</div>';    
     html += '</div>';    
     i++;
@@ -334,17 +332,6 @@ var onload = function() {
   });
 }
 
-var forcetick = function(id) {
-  var  ctrl = $('#'+id);
-  var checked = ctrl.is(":checked");
-  if(checked) {
-    ctrl.prop('checked', false);
-  } else { 
-    ctrl.prop('checked', true);
-  }
-  checktick(ctrl[0]);
-}
-
 // when a checkbox is ticked
 var checktick = function(ctrl) {
 
@@ -361,11 +348,9 @@ var checktick = function(ctrl) {
 
 // when the index page's search form is submitted
 var indexSearchSubmit = function() {
-  console.log("X");
   return false;
   var searchText = $('#bigsearchinput').val();
   var qs = generateQueryString(searchText,[]);
-  console.log("resources.html#?"+qs);
   window.location.href="resources.html#?"+qs;
   return false;
 }
