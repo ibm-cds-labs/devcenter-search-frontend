@@ -19,7 +19,7 @@ h1 {
 .typeicon {
   font-size: 48px;
   text-align:center;
-  padding-top:50px;
+  padding-top:0px;
   min-height:150px;
   width:100%;
 }
@@ -91,15 +91,18 @@ h1 {
 /* search results styles */
 #facets .facet-row {
   min-width: 180px;
+  line-height: 1.5em;
 }
 
 #results .description {
-  line-height: 1.44em;
+  line-height: 1.5em;
   margin-bottom: 10px;
+  font-weight: 300;
 }
 #results .facets {
   font-size: 12px;
   font-style: italic;
+  margin-left: 140px;
 }
   #results .facets span:after {
     content: ", ";
@@ -163,4 +166,45 @@ h1 {
     height: 100px;
     background: #666;
   }
+
+  /*label*/
+  label {
+    font-weight: 400;
+  }
+
+  /*resources links*/
+  .row {
+    margin-top: 50px;
+  }
+
+  .row .facet-row {
+    margin-top: 0px;
+  }
+
+  h3 a {
+    font-weight: 600;
+  }
+
+
+
+/*icon-images*/
+.glyphicon {
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
+  margin-left: 30px;
+}
+
+.glyphicon-facetime-video {
+  content:url(assets/video_icon.png);
+}
+
+.glyphicon-book {
+  content:url(assets/book_icon.png);
+}
+
+.glyphicon-list {
+  content:url(assets/list_icon.png);
+}
+
 
