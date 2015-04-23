@@ -191,6 +191,7 @@ var renderSerps = function(data, filter) {
   var html = "";
   for(var i in data.rows) {
     var doc = data.rows[i].doc;
+    var truncatedDesc = truncateString(doc.description);
     html += '<div class="row" data-result-index="' + i + '">';
     html += '<div class="col-xs-2">';
     switch(data.rows[i].doc.type) {
@@ -207,21 +208,23 @@ var renderSerps = function(data, filter) {
     html += '</div>';
     html += '<div class="col-xs-8">'
     html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a></h3>';
-    html += '<div class="description">' + doc.description + '</div>';
+    html += '<div class="description">' + truncatedDesc + '</div>';
+    html += '<div class="facets">';
     for(var j in doc.topic) {
-      html += '<span class="label label-primary sep">' + doc.topic[j] + '</span>'
+      html += '<span>' + doc.topic[j] + '</span>'
     }
     for(var j in doc.technologies) {
-      html += '<span class="label label-success sep">' + doc.technologies[j] + '</span>'
+      html += '<span>' + doc.technologies[j] + '</span>'
     }
     if(doc.languages && doc.languages.length>0) {
       for(var j in doc.languages) {
-        html += '<span class="label label-info sep">' + doc.languages[j] + '</span>'
+        html += '<span>' + doc.languages[j] + '</span>'
       }
     }
     if(doc.level) {
-      html += '<span class="label label-warning sep">' + doc.level + '</span>'
+      html += '<span>' + doc.level + '</span>'
     }
+    html += '</div>';
     html += '</div>';
     html += '<div class="col-xs-1">'
     html += '<span class="shareicon glyphicon glyphicon glyphicon-share-alt"></span>';    
@@ -249,6 +252,15 @@ var renderSerps = function(data, filter) {
   html += renderFacetGroup("level","Levels",data.counts);
 
   $('#facets').html(html);
+}
+
+// truncate text if longer than 200 chars
+var truncateString = function(string) {
+  if (string.length > 200) {
+    return string.substring(0,200) + '...';
+  } else {
+    return string
+  }
 }
 
 // apply a new filter
@@ -339,7 +351,7 @@ var onload = function() {
   
   // result click to trigger modal
   $(document).on("click", "#results .row", function(e) {
-    var resultIndex = $(this).attr('data-result-index');
+    var resultIndex = $(this).attr('data-result-index');    
     resultModal(resultIndex);
   });
  
@@ -347,24 +359,44 @@ var onload = function() {
   $(document).on("click", ".result_link", function(e) {
     e.preventDefault();
   });
-   
-  $(document).on("click", ".close-modal", function() {
-    $('.result-modal').hide();
-  });
 }
 
 // search result modal
 var resultModal = function(i) {
   
+  $('#result-modal').modal();
+  
   var resultContent = "";
   
-  resultContent += '<div class="close-modal">x</div>';
   resultContent += '<h4 class="title">' + searchResults.rows[i].doc.name + '</h4>';
   resultContent += '<div class="description">' + searchResults.rows[i].doc.description + '</div>';
+  resultContent += '<div class="filters">';
+  
+  
+  
+  for(var j in searchResults.rows[i].doc.topic) {
+      resultContent += '<span>' + searchResults.rows[i].doc.topic[j] + '</span>'
+    }
+    for(var j in searchResults.rows[i].doc.technologies) {
+      resultContent += '<span>' + searchResults.rows[i].doc.technologies[j] + '</span>'
+    }
+    if(searchResults.rows[i].doc.languages && searchResults.rows[i].doc.languages.length>0) {
+      for(var j in searchResults.rows[i].doc.languages) {
+        resultContent += '<span>' + searchResults.rows[i].doc.languages[j] + '</span>'
+      }
+    }
+    if(searchResults.rows[i].doc.level) {
+      resultContent += '<span>' + searchResults.rows[i].doc.level + '</span>'
+    }
+  
+  resultContent += '</div>';
   resultContent += '<div class="result-button"><a href="' + searchResults.rows[i].doc.url + '" target="_new">Go to result</a></div>';
   
+  
+  console.log(searchResults.rows[i].doc);
+  
   $('#result-modal-content').html(resultContent);
-  $('.result-modal').show();
+  
 }
 
 // when a checkbox is ticked

@@ -86,48 +86,92 @@ h1 {
   display:none;
   font-size:16px;
 }
-.result-modal {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1031;
-  background-color: rgba(0,0,0,0.5);
-  display: none;
+
+/* search results styles */
+
+#results .description {
+  line-height: 1.44em;
+  margin-bottom: 10px;
+}
+#results .facets {
+  font-size: 12px;
+  font-style: italic;
+}
+  #results .facets span:after {
+    content: ", ";
+  }
+  #results .facets span:last-child:after {
+    content: "";
+  }
+
+
+
+#result-modal-content .filters {
+      color: #999;
+      font-size: 12px;
+      margin-top: 10px;
+      font-style: italic;
+    }
+    #result-modal-content .filters span:after {
+      content: ", ";
+    }
+    #result-modal-content .filters span:last-child:after {
+      content: "";
+    }
+
+/* modal styles */
+#result-modal .modal-content {
+  padding: 20px;
 }
   #result-modal-content {
-    background: #fff;
-    margin: 100px auto 0 auto;
-    width: 600px;
-    height: 600px;
-    position: relative;
-    padding: 20px;
   }
-    .close-modal {
-      position: absolute;
-      right: 12px;
-      top: 5px;
-      cursor: pointer;
-      font-size:16px;
-    }
     #result-modal-content h4 {
-      margin: 20px 0;
+      margin: 5px 0 16px 0;
+      font-size: 16px;
     }
     #result-modal-content .description {
-      line-height: 22px;
-      padding-right: 10px;
+      line-height: 20px;
+      font-size: 13px;
+    }
+    #result-modal-content .filters {
+      color: #999;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    #result-modal-content .filters span:after {
+      content: ", ";
+    }
+    #result-modal-content .filters span:last-child:after {
+      content: "";
     }
     #result-modal-content .result-button {
       border: 1px solid #000;
       height: 30px;
       display: inline-block;
-      margin-top: 60px;
+      margin-top: 20px;
     }
       #result-modal-content .result-button a {
         width: 100%;
         height: 100%;
         display: inline-block;
         line-height: 26px;
-        padding: 0 20px;
+        padding: 0 50px;
       }
+  #result-modal .image-placeholder {
+    width: 100%;
+    height: 400px;
+    background: #666;
+  }
+  #result-modal .recommended {
+    font-size: 13px;
+    margin-top: 50px;
+  }
+  #result-modal .recommended .recommended-title {
+    margin-bottom: 8px;
+  }
+  #result-modal .recommended .recommended-item {
+    width: 100%;
+    height: 100px;
+    background: #666;
+  }
+
