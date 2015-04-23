@@ -87,7 +87,11 @@ h1 {
   font-size:16px;
 }
 
+
 /* search results styles */
+#facets .facet-row {
+  min-width: 180px;
+}
 
 #results .description {
   line-height: 1.44em;
@@ -103,21 +107,6 @@ h1 {
   #results .facets span:last-child:after {
     content: "";
   }
-
-
-
-#result-modal-content .filters {
-      color: #999;
-      font-size: 12px;
-      margin-top: 10px;
-      font-style: italic;
-    }
-    #result-modal-content .filters span:after {
-      content: ", ";
-    }
-    #result-modal-content .filters span:last-child:after {
-      content: "";
-    }
 
 /* modal styles */
 #result-modal .modal-content {

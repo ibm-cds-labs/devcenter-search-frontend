@@ -161,7 +161,7 @@ var renderFacetGroup = function(facet, title, datacounts) {
     if(datacounts[facet][j]) {
       live = true;
     }
-    html += '<div class="row">';
+    html += '<div class="row facet-row">';
     html += '<div class="col-xs-2"><input id="facet' + facet+i + '" type="checkbox" onclick="checktick(this)"';
     html += ' data-facet="'+facet+'" data-value="' + j + '"';
     if(!live) {
