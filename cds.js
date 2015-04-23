@@ -206,7 +206,7 @@ var renderSerps = function(data, filter) {
         break;
     }
     html += '</div>';
-    html += '<div class="col-xs-8">'
+    html += '<div class="col-xs-10>'
     html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a></h3>';
     html += '<div class="description">' + truncatedDesc + '</div>';
     html += '<div class="facets">';
@@ -225,12 +225,6 @@ var renderSerps = function(data, filter) {
       html += '<span>' + doc.level + '</span>'
     }
     html += '</div>';
-    html += '</div>';
-    html += '<div class="col-xs-1">'
-    html += '<span class="shareicon glyphicon glyphicon glyphicon-share-alt"></span>';    
-    html += '</div>';
-    html += '<div class="col-xs-1">'
-    html += '<span class="shareicon glyphicon glyphicon glyphicon-share"></span>';    
     html += '</div>';
     
     html += '</div>';
