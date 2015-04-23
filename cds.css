@@ -88,8 +88,22 @@ h1 {
   font-size:16px;
 }
 
+/* search bar styles */
+.form-horizontal .control-label {
+  text-align: left;
+}
+
 
 /* search results styles */
+
+h3 {
+  font-weight: 300;
+}
+
+h4 {
+  font-size: 16px;
+}
+
 #facets .facet-row {
   min-width: 180px;
   line-height: 1.5em;
