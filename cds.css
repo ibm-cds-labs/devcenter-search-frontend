@@ -114,7 +114,7 @@ h1 {
 
 /* modal styles */
 #result-modal .modal-content {
-  padding: 20px;
+  padding: 30px;
 }
   #result-modal-content {
   }
@@ -125,6 +125,7 @@ h1 {
     #result-modal-content .description {
       line-height: 20px;
       font-size: 13px;
+      font-weight: 300;
     }
     #result-modal-content .filters {
       color: #999;
