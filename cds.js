@@ -3,6 +3,7 @@
 var filter = [];
 var allfacets = {};
 var searchResults = {};
+var renderedSerps = {};
 
 // sanitise a string so that it can be used safely in a Lucene search
 var sanitise = function(str) {
@@ -187,6 +188,8 @@ var renderFacetGroup = function(facet, title, datacounts) {
 // render the search results 'data' as HTML
 var renderSerps = function(data, filter) {
   
+  renderedSerps = data;
+    
   // render docs
   var html = "";
   for(var i in data.rows) {
@@ -350,7 +353,7 @@ var onload = function() {
   // Suppress anchor firing and show modal when clicked
   $(document).on("click", ".result_link", function(e) {
     e.preventDefault();
-    var resultIndex = $(this).attr('data-result-index');    
+    var resultIndex = $(this).attr('data-result-index');
     resultModal(resultIndex);
   });
   
@@ -363,39 +366,37 @@ var onload = function() {
 // search result modal
 var resultModal = function(i) {
   
-  $('#result-modal').modal();
-  
   var resultContent = "";
-  var resultImage ="";
+  var resultImage = "";
   
-  resultContent += '<h4 class="title">' + searchResults.rows[i].doc.name + '</h4>';
-  resultContent += '<div class="description">' + searchResults.rows[i].doc.description + '</div>';
+  resultContent += '<h4 class="title">' + renderedSerps.rows[i].doc.name + '</h4>';
+  resultContent += '<div class="description">' + renderedSerps.rows[i].doc.description + '</div>';
   resultContent += '<div class="filters">';
   
   
   
-  for(var j in searchResults.rows[i].doc.topic) {
-      resultContent += '<span>' + searchResults.rows[i].doc.topic[j] + '</span>'
+  for(var j in renderedSerps.rows[i].doc.topic) {
+      resultContent += '<span>' + renderedSerps.rows[i].doc.topic[j] + '</span>'
     }
-    for(var j in searchResults.rows[i].doc.technologies) {
-      resultContent += '<span>' + searchResults.rows[i].doc.technologies[j] + '</span>'
+    for(var j in renderedSerps.rows[i].doc.technologies) {
+      resultContent += '<span>' + renderedSerps.rows[i].doc.technologies[j] + '</span>'
     }
-    if(searchResults.rows[i].doc.languages && searchResults.rows[i].doc.languages.length>0) {
-      for(var j in searchResults.rows[i].doc.languages) {
-        resultContent += '<span>' + searchResults.rows[i].doc.languages[j] + '</span>'
+    if(renderedSerps.rows[i].doc.languages && renderedSerps.rows[i].doc.languages.length>0) {
+      for(var j in renderedSerps.rows[i].doc.languages) {
+        resultContent += '<span>' + renderedSerps.rows[i].doc.languages[j] + '</span>'
       }
     }
-    if(searchResults.rows[i].doc.level) {
-      resultContent += '<span>' + searchResults.rows[i].doc.level + '</span>'
+    if(renderedSerps.rows[i].doc.level) {
+      resultContent += '<span>' + renderedSerps.rows[i].doc.level + '</span>'
     }
   
   resultContent += '</div>';
-  resultContent += '<div class="result-button"><a href="' + searchResults.rows[i].doc.url + '" target="_new">Go to result</a></div>';
+  resultContent += '<div class="result-button"><a href="' + renderedSerps.rows[i].doc.url + '" target="_new">Go to result</a></div>';
   
-  resultImage += '<img src="' + searchResults.rows[i].doc.imageurl + '" class="img-responsive"/>';
+  resultImage += '<img src="' + renderedSerps.rows[i].doc.imageurl + '" class="img-responsive"/>';
   
+  $('#result-modal').modal();
   $('#result-modal-content').html(resultContent);
-  
   $('#result-modal-image-placeholder').html(resultImage);
   
 }
