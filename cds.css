@@ -106,9 +106,26 @@ h1 {
 
 
 /* search results styles */
-
-h3 {
+#filter-results-row {
+  margin-top: 30px;
+}
+#results-row {
+  margin-top: 20px;
+}
+#results-row .results-icon {
+  padding-left: 0;
+}
+#results-row .results-open-icon span {
+  cursor: pointer;
+}
+#results h3 {
   font-weight: 300;
+  margin-top: 0;
+}
+
+#results h3 a {
+  font-weight: 300;
+  font-size: 22px;
 }
 
 h4 {
@@ -129,7 +146,6 @@ h4 {
 #results .facets {
   font-size: 12px;
   font-style: italic;
-  margin-left: 140px;
 }
   #results .facets span:after {
     content: ", ";
@@ -142,6 +158,12 @@ h4 {
 #result-modal .modal-content {
   padding: 30px;
 }
+  #result-modal .result-modal-close {
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    cursor: pointer;
+  }
   #result-modal-content {
   }
     #result-modal-content h4 {
@@ -157,6 +179,7 @@ h4 {
       color: #999;
       font-size: 12px;
       margin-top: 10px;
+      font-style: italic;
     }
     #result-modal-content .filters span:after {
       content: ", ";
@@ -177,10 +200,9 @@ h4 {
         line-height: 26px;
         padding: 0 50px;
       }
-  #result-modal .image-placeholder {
+  #result-modal #result-modal-image-placeholder {
     width: 100%;
-    height: 400px;
-    background: #666;
+    max-height: 400px;
   }
   #result-modal .recommended {
     font-size: 13px;
@@ -201,8 +223,8 @@ h4 {
   }
 
   /*resources links*/
-  .row {
-    margin-top: 50px;
+  #results .row {
+    margin-bottom: 50px;
   }
 
   .row .facet-row {

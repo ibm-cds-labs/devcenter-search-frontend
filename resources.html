@@ -94,7 +94,7 @@
       </div> -->
       
       <!-- next row with filter things -->
-      <div class="row">
+      <div class="row" id="filter-results-row">
         
         <!-- left column -->
         <div class="col-md-2 hidden-xs">
@@ -107,38 +107,9 @@
         <!-- right column -->
         <div class="col-md-10">
         
-          <!-- row with three search results in -->
-          <div class="row">
+          <div class="row" id="results-row">
             <!-- results go here -->
             <div id="results"></div>
-            
-            <!--
-            <div class="col-md-3 serp">
-              <div class="serptop"></div>
-              <div class="serpbottom">
-                <h4>Location Tracker</h4>
-                <p class="resourcetype">Tutorial</p>
-              </div>
-            </div>
-            <div class="col-md-3 serp">
-              <div class="serptop"></div>
-              <div class="serpbottom">
-                <h4>Safety Pulse</h4>
-                <p class="resourcetype">Article</p>
-              </div>
-            </div>
-            <div class="col-md-3 serp">
-              <div class="serptop"></div>
-              <div class="serpbottom">
-                <h4>Replication</h4>
-                <p class="resourcetype">Video</p>
-              </div>
-            </div>
-          </div> 
-              
-          -->
-        
-        
         </div> <!-- right column-->
       </div>
    
@@ -149,10 +120,11 @@
     <div class="modal fade" id="result-modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
+          <div class="result-modal-close" data-dismiss="modal" aria-hidden="true">&times;</div>
           <div class="row">
           
             <div class="col-md-5">
-              <div class="image-placeholder">&nbsp;</div>
+              <div id="result-modal-image-placeholder">&nbsp;</div>
             </div>
             <div class="col-md-7" id="result-modal-content"></div>
 

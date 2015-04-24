@@ -192,8 +192,8 @@ var renderSerps = function(data, filter) {
   for(var i in data.rows) {
     var doc = data.rows[i].doc;
     var truncatedDesc = truncateString(doc.description);
-    html += '<div class="row" data-result-index="' + i + '">';
-    html += '<div class="col-xs-2">';
+    html += '<div class="row">';
+    html += '<div class="col-xs-1 results-icon">';
     switch(data.rows[i].doc.type) {
       case "Video":                    
         html += '<span class="typeicon glyphicon glyphicon-facetime-video"></span>';
@@ -202,12 +202,12 @@ var renderSerps = function(data, filter) {
         html += '<span class="typeicon glyphicon glyphicon-book"></span>';
         break;                         
       case "Tutorial":                 
-        html += '<span class="typeicon glyphicon glyphicon glyphicon-list"></span>';
+        html += '<span class="typeicon glyphicon glyphicon-list"></span>';
         break;
     }
     html += '</div>';
-    html += '<div class="col-xs-10>'
-    html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a></h3>';
+    html += '<div class="col-xs-10 results-document">';    
+    html += '<h3><a href="' + doc.url + '" target="_new" class="result_link" data-result-index="' + i + '">'+doc.name+'</a></h3>';
     html += '<div class="description">' + truncatedDesc + '</div>';
     html += '<div class="facets">';
     for(var j in doc.topic) {
@@ -225,6 +225,10 @@ var renderSerps = function(data, filter) {
       html += '<span>' + doc.level + '</span>'
     }
     html += '</div>';
+    html += '</div>';
+    
+    html += '<div class="col-xs-1 results-open-icon" data-result-index="' + i + '">';
+    html += '<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>';
     html += '</div>';
     
     html += '</div>';
@@ -342,17 +346,18 @@ var onload = function() {
       });
     } 
   });
-  
-  // result click to trigger modal
-  $(document).on("click", "#results .row", function(e) {
+ 
+  // Suppress anchor firing and show modal when clicked
+  $(document).on("click", ".result_link", function(e) {
+    e.preventDefault();
     var resultIndex = $(this).attr('data-result-index');    
     resultModal(resultIndex);
   });
- 
-  // Suppress anchor clicks
-  $(document).on("click", ".result_link", function(e) {
-    e.preventDefault();
-  });
+  
+  $(document).on("click", ".results-open-icon", function() {
+    var resultIndex = $(this).attr('data-result-index');    
+    resultModal(resultIndex);
+  })
 }
 
 // search result modal
@@ -361,6 +366,7 @@ var resultModal = function(i) {
   $('#result-modal').modal();
   
   var resultContent = "";
+  var resultImage ="";
   
   resultContent += '<h4 class="title">' + searchResults.rows[i].doc.name + '</h4>';
   resultContent += '<div class="description">' + searchResults.rows[i].doc.description + '</div>';
@@ -386,10 +392,11 @@ var resultModal = function(i) {
   resultContent += '</div>';
   resultContent += '<div class="result-button"><a href="' + searchResults.rows[i].doc.url + '" target="_new">Go to result</a></div>';
   
-  
-  console.log(searchResults.rows[i].doc);
+  resultImage += '<img src="' + searchResults.rows[i].doc.imageurl + '" class="img-responsive"/>';
   
   $('#result-modal-content').html(resultContent);
+  
+  $('#result-modal-image-placeholder').html(resultImage);
   
 }
 
