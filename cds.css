@@ -112,20 +112,23 @@ h1 {
 #results-row {
   margin-top: 20px;
 }
+
 #results-row .results-icon {
   padding-left: 0;
 }
+
 #results-row .results-open-icon span {
   cursor: pointer;
 }
+
 #results h3 {
   font-weight: 300;
   margin-top: 0;
 }
 
 #results h3 a {
-  font-weight: 300;
-  font-size: 22px;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 h4 {
