@@ -1,3 +1,5 @@
+/* @override http://localhost/cloudant-labs.github.io/cds.css */
+
 h1 {
   margin-top:120px;
   margin-bottom:50px;
@@ -103,7 +105,23 @@ h1 {
 }
 
 .navbar>.container-fluid .navbar-brand {
-  margin-left: 60px;
+  margin-left: 10px; /*60px;*/
+  margin-right: 2.75em;
+  font-weight: 700;
+}
+
+.navbar-nav {
+	font-size: 16px;
+	font-weight: 200;
+}
+
+#hero {
+	/* this can go away with a click */
+}
+
+h1 {
+	font-weight: 200;
+	margin-bottom: 16px;
 }
 
 /* search bar styles */
