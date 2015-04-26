@@ -240,6 +240,7 @@ h4 {
   }
   #result-modal .recommended .recommended-title {
     margin-bottom: 8px;
+    font-weight: 300;
   }
   #result-modal .recommended .recommended-item {
     width: 100%;
