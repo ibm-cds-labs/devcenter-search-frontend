@@ -4,6 +4,7 @@ var filter = [];
 var allfacets = {};
 var searchResults = {};
 var renderedSerps = {};
+var CLOUDANT_URL = "https://d14f43e9-5102-45bc-b394-c92520c2c0bd-bluemix.cloudant.com"
 
 // sanitise a string so that it can be used safely in a Lucene search
 var sanitise = function(str) {
@@ -134,7 +135,7 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
     $('#sort').html("");
   }
   var obj = {
-    url: "https://reader.cloudant.com/dw/_design/search/_search/search",
+    url: CLOUDANT_URL + "/dw/_design/search/_search/search",
     data: qs,
     dataType: "json",
     method: "get"
