@@ -108,6 +108,7 @@ h1 {
   margin-left: 10px; /*60px;*/
   margin-right: 2.75em;
   font-weight: 700;
+  text-transform: uppercase;
 }
 
 .navbar-nav {
