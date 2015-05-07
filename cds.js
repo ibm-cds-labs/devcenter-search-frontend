@@ -212,9 +212,12 @@ var renderSerps = function(data, filter) {
     html += '</div>';
     html += '<div class="col-xs-10 results-document">';    
     html += '<h3><a href="' + doc.url + '" target="_new" class="result_link" data-result-index="' + i + '">'+doc.name+'</a></h3>';
-    html += '<div class="description">' + truncatedDesc + '</div>';
+    html += '<div class="description">' + truncatedDesc;
+    html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
+    html += '</div>';
+    
     html += '<div class="facets">';
-    for(var j in doc.topic) {
+     for(var j in doc.topic) {
       html += '<span>' + doc.topic[j] + '</span>'
     }
     for(var j in doc.technologies) {

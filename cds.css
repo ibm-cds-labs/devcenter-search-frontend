@@ -116,6 +116,14 @@ h1 {
 	font-weight: 200;
 }
 
+.editicon {
+  color:#fafafa;
+  font-size:10px;
+}
+
+.editlink:hover{
+  text-decoration: none;
+}
 #hero {
 	/* this can go away with a click */
 }
