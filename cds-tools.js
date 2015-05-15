@@ -1,14 +1,17 @@
 
 // generate a query string from a a search string and 
 // an array of filters
-var generateQueryString = function(searchText, filter) {
+var generateQueryString = function(searchText, filter, selectedId) {
   var qs = ""
   
-  if(searchText && searchText.length>0) {
+  if (searchText && searchText.length>0) {
     qs += "searchText="+encodeURIComponent(searchText);
   }
-  if(filter && filter.length>0) {
+  if (filter && filter.length>0) {
     qs += "&filter="+encodeURIComponent(JSON.stringify(filter));
+  }
+  if (selectedId && selectedId.length>0) {
+    qs += "&id="+encodeURIComponent(selectedId);
   }
   return qs;
 }

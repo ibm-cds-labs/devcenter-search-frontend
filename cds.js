@@ -4,7 +4,7 @@ var filter = [];
 var allfacets = {};
 var searchResults = {};
 var renderedSerps = {};
-var CLOUDANT_URL = "https://d14f43e9-5102-45bc-b394-c92520c2c0bd-bluemix.cloudant.com"
+var CLOUDANT_URL = "https://d14f43e9-5102-45bc-b394-c92520c2c0bd-bluemix.cloudant.com";
 
 // sanitise a string so that it can be used safely in a Lucene search
 var sanitise = function(str) {
@@ -211,7 +211,7 @@ var renderSerps = function(data, filter) {
     }
     html += '</div>';
     html += '<div class="col-xs-10 results-document">';    
-    html += '<h3><a href="' + doc.url + '" target="_new" class="result_link" data-result-index="' + i + '">'+doc.name+'</a></h3>';
+    html += '<h3><a href="' + doc.url + '" target="_new" class="result_link" data-result-index="' + i + '" data-result-id="' + doc._id + '">'+doc.name+'</a></h3>';
     html += '<div class="description">' + truncatedDesc;
     html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
     html += '</div>';
@@ -341,7 +341,8 @@ var onload = function() {
       // extract search and filter
       searchText = (typeof hash.searchText=="string")?hash.searchText:"";
       filter = (typeof hash.filter == "object")?hash.filter:[];
-      console.log(searchText,filter);
+      selectedId = (typeof hash.id == "string")?hash.id:null;
+      // console.log(searchText,filter,selectedId);
       
       // feed the search box
       $('#searchtext').val(searchText);
@@ -350,20 +351,26 @@ var onload = function() {
       doSearch(searchText, filter, false, function(err, data) {
         searchResults = data;
         renderSerps(data, filter);
+        openDocument($("a[data-result-id="+selectedId+"]"))
       });
     } 
   });
  
+  var openDocument = function(el) {
+    var resultIndex = $(el).attr('data-result-index');
+    var qs = generateQueryString(searchText,filter,$(el).attr('data-result-id'));
+    window.location.href= window.location.pathname+"#?"+qs; 
+    resultModal(resultIndex);
+  };
+ 
   // Suppress anchor firing and show modal when clicked
   $(document).on("click", ".result_link", function(e) {
     e.preventDefault();
-    var resultIndex = $(this).attr('data-result-index');
-    resultModal(resultIndex);
+    openDocument(this);
   });
   
-  $(document).on("click", ".results-open-icon", function() {
-    var resultIndex = $(this).attr('data-result-index');    
-    resultModal(resultIndex);
+  $(document).on("click", ".results-open-icon", function() { 
+    openDocument(this);
   })
 }
 
