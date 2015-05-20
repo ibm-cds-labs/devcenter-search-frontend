@@ -22,14 +22,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="https://developer.ibm.com/clouddataservices/">Cloud Data Services</a>
+          <a class="navbar-brand" href="https://developer.ibm.com/clouddataservices/"><span>IBM</span> Cloud Data Services</a>
         </div>
 
         <div id="navbar-collapse-1">
          <!-- Collect the nav links, forms, and other content for toggling -->
           <ul class="nav navbar-nav">
             <li><a href="products.html">Products</a></li>
-            <li><a href="resources.html">Resources</a></li>
+            <li class="active"><a href="resources.html">Resources</a></li>
             <li><a href="https://developer.ibm.com/clouddataservices/blog/">Blog</a></li>
             <li><a href="https://developer.ibm.com/clouddataservices/events/">Events</a></li>
             <li><a href="resources.html"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
@@ -40,61 +40,35 @@
       </div><!-- /.container-fluid -->
     </nav>
     
+    <div class="container-fluid search-header">
+      <div class="container">
+    
+        <!-- a gap -->
+	    <div id="hero">
+          <h1>Resources from around the web</h1>
+          <p><em>Our collection of the best tutorials, example applications and other learning materials from within IBM and out in the wild.</em></p>
+	      <br/><br/>
+        </div>
+      
+        <!-- top row with search bar -->
+        <div class="row search-row">
+          <div class="col-md-12">
+            <form class="form-horizontal" onsubmit="return submitForm()">
+              <div class="form-group">
+                 <label class="col-sm-2 control-label" for="searchtext">Search</label>
+                 <div class="col-sm-10">
+                   <input type="text" class="form-control" id="searchtext">
+                 </div>
+               </div>
+            </form>
+          </div>    
+        </div>
+    
+      </div>
+    </div>
+    
     <div class="container">
     
-      <!-- a gap -->
-	  <div id="hero">
-        <h1>Resources from around the web</h1>
-        <p><em>Our collection of the best tutorials, example applications and other learning materials from within IBM and out in the wild.</em></p>
-	    <br/><br/>
-      </div>
-      
-      <!-- top row with search bar -->
-      <div class="row">
-        <div class="col-md-12">
-          <form class="form-horizontal" onsubmit="return submitForm()">
-            <div class="form-group">
-               <label class="col-sm-2 control-label" for="searchtext">Search</label>
-               <div class="col-sm-10">
-                 <input type="text" class="form-control" id="searchtext">
-               </div>
-             </div>
-          </form>
-        </div>    
-      </div> 
-      
-<!--   
-     
-     <div class="row">
-        <div class="col-md-3 hidden-xs"></div>
-        <div class="col-md-9 hidden-xs">
-          
-          <nav class="navbar navbar-default">
-            <div class="container-fluid">
-              <ul class="nav navbar-nav navbar-left">
-               <li><a href="#"><span class="glyphicon glyphicon glyphicon-th" aria-hidden="true"></span> Gallery</a></li>
-               <li>  </li>
-               <li><a href="#"><span class="glyphicon glyphicon glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a></li>
-              </ul>
-                
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Sort by:</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Date <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">a</a></li>
-                    <li><a href="#">b</a></li>
-                    <li><a href="#">c</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">d</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </nav>
-          
-        </div>    
-      </div> -->
       
       <!-- next row with filter things -->
       <div class="row" id="filter-results-row">
@@ -118,36 +92,6 @@
    
       
     </div> <!-- container -->
-    
-    <!-- Search results modal -->    
-    <div class="modal fade" id="result-modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="result-modal-close" data-dismiss="modal" aria-hidden="true">&times;</div>
-          <div class="row">
-          
-            <div class="col-md-5">
-              <div id="result-modal-image-placeholder">&nbsp;</div>
-            </div>
-            <div class="col-md-7" id="result-modal-content"></div>
-
-          </div>
-          
-          <div class="row recommended">
-            <div class="col-md-12 recommended-title">Not what you're looking for? Try one of these.</div>
-            <div class="col-md-4">
-              <div class="recommended-item">&nbsp;</div>
-            </div>
-            <div class="col-md-4">
-              <div class="recommended-item">&nbsp;</div>
-            </div>
-            <div class="col-md-4">
-              <div class="recommended-item">&nbsp;</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     
   </body>
 </html>

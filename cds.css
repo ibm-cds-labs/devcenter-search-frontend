@@ -100,16 +100,14 @@ h1 {
 
 /* navbar brand */
 
-.container-fluid {
-	
-}
-
 .navbar>.container-fluid .navbar-brand {
   margin-left: 10px; /*60px;*/
   margin-right: 2.75em;
-  font-weight: 700;
-  text-transform: uppercase;
+  font-weight: 500;
 }
+  .navbar>.container-fluid .navbar-brand span {
+    font-weight: 400;
+  }
 
 .navbar-nav {
 	font-size: 16px;
@@ -124,6 +122,16 @@ h1 {
 .editlink:hover{
   text-decoration: none;
 }
+
+.search-header {
+  background: #337ab7;
+  color: #fff;
+}
+
+.search-header .search-row {
+  
+}
+
 #hero {
 	/* this can go away with a click */
 }
@@ -165,6 +173,7 @@ h1 {
   font-weight: 300;
   margin-top: 0;
   font-size: 16px;
+  margin-bottom: 4px;
 }
 
 #results h3 a {
@@ -172,14 +181,17 @@ h1 {
   font-size: 16px;
 }
 
+#results h4 {
+  margin-top: 0;
+}
+  #results h4 a {
+    color: #ccc;
+    font-size: 14px;
+  }
+
 h4 {
   font-size: 16px;
   font-weight: 400;
-}
-
-#facets .facet-row {
-  min-width: 180px;
-  line-height: 1.5em;
 }
 
 #results .description {
@@ -187,6 +199,39 @@ h4 {
   margin-bottom: 10px;
   font-weight: 300;
 }
+
+#results .result-expand-collapse div {
+  cursor: pointer;
+  color: #337AB7;
+}
+
+  #results .result-expand-collapse .more-text .glyphicon {
+    margin-left: 30px;
+    vertical-align: middle;
+    margin-bottom: 4px;
+  }
+
+  #results .result-expand-collapse .less-text .glyphicon {
+    margin-left: 30px;
+    vertical-align: middle;
+    margin-bottom: 4px;
+  }
+
+  #results .show-more-default {
+    display: none;
+  }
+  #results #result-image-placeholder {
+    padding: 10px;
+  }
+
+
+
+
+#facets .facet-row {
+  min-width: 180px;
+  line-height: 1.5em;
+}
+
 #results .facets {
   font-size: 12px;
   font-style: italic;
@@ -200,70 +245,6 @@ h4 {
     content: "";
   }
 
-/* modal styles */
-#result-modal .modal-content {
-  padding: 30px;
-}
-  #result-modal .result-modal-close {
-    position: absolute;
-    right: 16px;
-    top: 10px;
-    cursor: pointer;
-  }
-  #result-modal-content {
-  }
-    #result-modal-content h4 {
-      margin: 5px 0 16px 0;
-      font-size: 16px;
-    }
-    #result-modal-content .description {
-      line-height: 20px;
-      font-size: 13px;
-      font-weight: 300;
-    }
-    #result-modal-content .filters {
-      color: #999;
-      font-size: 12px;
-      margin-top: 10px;
-      font-style: italic;
-    }
-    #result-modal-content .filters span:after {
-      content: ", ";
-    }
-    #result-modal-content .filters span:last-child:after {
-      content: "";
-    }
-    #result-modal-content .result-button {
-      border: 1px solid #000;
-      height: 30px;
-      display: inline-block;
-      margin-top: 20px;
-    }
-      #result-modal-content .result-button a {
-        width: 100%;
-        height: 100%;
-        display: inline-block;
-        line-height: 26px;
-        padding: 0 50px;
-      }
-  #result-modal #result-modal-image-placeholder {
-    width: 100%;
-    max-height: 400px;
-  }
-  #result-modal .recommended {
-    font-size: 13px;
-    margin-top: 50px;
-  }
-  #result-modal .recommended .recommended-title {
-    margin-bottom: 8px;
-    font-weight: 300;
-  }
-  #result-modal .recommended .recommended-item {
-    width: 100%;
-    height: 100px;
-    background: #666;
-  }
-
   /*label*/
   label {
     font-weight: 300;
@@ -272,6 +253,9 @@ h4 {
   /*resources links*/
   #results .row {
     margin-bottom: 50px;
+  }
+  #results .expanded-result-row {
+    margin-bottom: 20px;
   }
 
   .row .facet-row {
@@ -354,20 +338,36 @@ h4 {
 }
 
 .navbar-default {
-	color: #666;
-	background-color: #fff;
+	color: #fff;
+	background: #337ab7;
 	max-height: 66px;
-	/*border-color: #333;*/
+	border-bottom: none;
 }
-.navbar-default a:link, .navbar-default a:visited, .navbar-nav, .navbar-nav a:link, .navbar-nav a:visited {
-	color: #666;
-}
-
-a:hover {
-	color: #0000ff;
-	border-bottom: 1px dotted #666;
-}
+  .navbar-default a:link, .navbar-default a:visited, .navbar-nav, .navbar-nav a:link, .navbar-nav a:visited {
+    color: #fff;
+  }
+  
+  .navbar-default .navbar-brand:hover {
+    color: #fff;
+  }
+  .navbar-default .navbar-nav > li > a {
+    color: #fff;
+  }
+  .navbar-default .navbar-nav > li.active a {
+    border-bottom: 2px solid #fff;
+  }
+  .navbar-default .navbar-nav > .active > a,
+  .navbar-default .navbar-nav > .active > a:hover,
+  .navbar-default .navbar-nav > .active > a:focus {
+    background: none;
+    color: #fff;
+  }
+  .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #fff;
+    border-bottom: 2px solid #fff;
+  }
+ 
 
 html,body {
-	color: #666;
+  color: #666;
 }

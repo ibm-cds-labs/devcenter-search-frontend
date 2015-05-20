@@ -195,28 +195,35 @@ var renderSerps = function(data, filter) {
   var html = "";
   for(var i in data.rows) {
     var doc = data.rows[i].doc;
-    var truncatedDesc = truncateString(doc.description);
+    var truncatedDesc = truncateDescription(doc.description);
+    var truncatedURL = truncateURL(doc.url);
     html += '<div class="row">';
-    html += '<div class="col-xs-1 results-icon">';
-    switch(data.rows[i].doc.type) {
-      case "Video":                    
-        html += '<span class="typeicon glyphicon glyphicon-facetime-video"></span>';
-        break;                         
-      case "Article":                  
-        html += '<span class="typeicon glyphicon glyphicon-book"></span>';
-        break;                         
-      case "Tutorial":                 
-        html += '<span class="typeicon glyphicon glyphicon-list"></span>';
-        break;
-    }
-    html += '</div>';
-    html += '<div class="col-xs-10 results-document">';    
+    html += '<div class="col-xs-12 results-document">';    
     html += '<h3><a href="' + doc.url + '" target="_new" class="result_link" data-result-index="' + i + '" data-result-id="' + doc._id + '">'+doc.name+'</a></h3>';
-    html += '<div class="description">' + truncatedDesc;
+    html += '<h4><a href="' + doc.url + '">' + truncatedURL + '</a></h4>';
+    html += '<div class="description show-less'+ i +'">' + truncatedDesc;
     html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
     html += '</div>';
     
-    html += '<div class="facets">';
+    
+    
+    html += '<div class="row expanded-result-row show-more'+ i +' show-more-default">';
+    html += '<div class="col-xs-2 show-more'+ i +' show-more-default" id="result-image-placeholder">';
+    if (doc.imageurl) {
+      html += '<img src="' + doc.imageurl + '" class="img-responsive"/>';
+    } else {
+      html += '&nbsp;';
+    }
+    html += '</div>';
+     
+    
+    
+    html += '<div class="col-xs-10 show-more'+ i +' show-more-default">';
+    html += '<div class="description show-more'+ i +' show-more-default">' + doc.description;
+    html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
+    html += '</div>';
+    
+    html += '<div class="facets show-more'+ i +' show-more-default">';
      for(var j in doc.topic) {
       html += '<span>' + doc.topic[j] + '</span>'
     }
@@ -232,12 +239,22 @@ var renderSerps = function(data, filter) {
       html += '<span>' + doc.level + '</span>'
     }
     html += '</div>';
+    
+    
+    html += '</div>';
     html += '</div>';
     
-    html += '<div class="col-xs-1 results-open-icon" data-result-index="' + i + '">';
-    html += '<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>';
+    
+    html += '<div class="result-expand-collapse display-less" data-result-index="' + i + '" data-result-id="' + doc._id + '">';
+    
+    html += '<div class="more-text show-less'+ i +'">More <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>';
+    
+    html += '<div class="less-text show-more'+ i +' show-more-default">Less <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></div>';
+    
     html += '</div>';
     
+    
+    html += '</div>';
     html += '</div>';
   }
   
@@ -259,10 +276,19 @@ var renderSerps = function(data, filter) {
   $('#facets').html(html);
 }
 
-// truncate text if longer than 200 chars
-var truncateString = function(string) {
+// truncate description text if longer than 200 chars
+var truncateDescription = function(string) {
   if (string.length > 200) {
     return string.substring(0,200) + '...';
+  } else {
+    return string
+  }
+}
+
+// truncate URL for search display
+var truncateURL = function(string) {
+  if (string.length > 50) {
+    return string.substring(0,50) + '...';
   } else {
     return string
   }
@@ -351,64 +377,49 @@ var onload = function() {
       doSearch(searchText, filter, false, function(err, data) {
         searchResults = data;
         renderSerps(data, filter);
-        openDocument($("a[data-result-id="+selectedId+"]"))
       });
     } 
   });
  
-  var openDocument = function(el) {
-    var resultIndex = $(el).attr('data-result-index');
-    var qs = generateQueryString(searchText,filter,$(el).attr('data-result-id'));
-    window.location.href= window.location.pathname+"#?"+qs; 
-    resultModal(resultIndex);
-  };
- 
   // Suppress anchor firing and show modal when clicked
   $(document).on("click", ".result_link", function(e) {
     e.preventDefault();
-    openDocument(this);
   });
   
-  $(document).on("click", ".results-open-icon", function() { 
-    openDocument(this);
-  })
-}
-
-// search result modal
-var resultModal = function(i) {
+  // Expand/collapse when more/less is clicked for result
   
-  var resultContent = "";
-  var resultImage = "";
-  
-  resultContent += '<h4 class="title">' + renderedSerps.rows[i].doc.name + '</h4>';
-  resultContent += '<div class="description">' + renderedSerps.rows[i].doc.description + '</div>';
-  resultContent += '<div class="filters">';
-  
-  
-  
-  for(var j in renderedSerps.rows[i].doc.topic) {
-      resultContent += '<span>' + renderedSerps.rows[i].doc.topic[j] + '</span>'
+  $(document).on("click", ".result-expand-collapse", function(e) {
+    var resultIndex = $(this).attr('data-result-index');
+    
+    if ($(this).hasClass('display-less')) {
+      expandResult(resultIndex);
+      $(this).removeClass('display-less');
+    } else {
+      collapseResult(resultIndex);
+      $(this).addClass('display-less');
     }
-    for(var j in renderedSerps.rows[i].doc.technologies) {
-      resultContent += '<span>' + renderedSerps.rows[i].doc.technologies[j] + '</span>'
-    }
-    if(renderedSerps.rows[i].doc.languages && renderedSerps.rows[i].doc.languages.length>0) {
-      for(var j in renderedSerps.rows[i].doc.languages) {
-        resultContent += '<span>' + renderedSerps.rows[i].doc.languages[j] + '</span>'
-      }
-    }
-    if(renderedSerps.rows[i].doc.level) {
-      resultContent += '<span>' + renderedSerps.rows[i].doc.level + '</span>'
-    }
+  });
   
-  resultContent += '</div>';
-  resultContent += '<div class="result-button"><a href="' + renderedSerps.rows[i].doc.url + '" target="_new">Go to result</a></div>';
+  var expandResult = function(index) {
+    console.log('expand');
+    console.log(index);
+    
+    
+    $('.show-more'+ index).show();
+    $('.show-less'+ index).hide();
+    
+  };
   
-  resultImage += '<img src="' + renderedSerps.rows[i].doc.imageurl + '" class="img-responsive"/>';
-  
-  $('#result-modal').modal();
-  $('#result-modal-content').html(resultContent);
-  $('#result-modal-image-placeholder').html(resultImage);
+  var collapseResult = function(index) {
+    console.log('collapse');
+    console.log(index);
+    
+    
+    $('.show-less'+ index).show();
+    $('.show-more'+ index).hide();
+    
+    
+  }
   
 }
 
