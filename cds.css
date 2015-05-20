@@ -291,6 +291,11 @@ h4 {
 
 /* PRODUCTS */
 
+.products-header {
+  background: #337AB7;
+  color: #fff;
+}
+
 .panel {
   border: none;
 }
