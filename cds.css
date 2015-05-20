@@ -183,6 +183,7 @@ h1 {
 
 #results h4 {
   margin-top: 0;
+  font-weight: 300;
 }
   #results h4 a {
     color: #ccc;
