@@ -7,10 +7,14 @@ var renderedSerps = {};
 var CLOUDANT_URL = "https://d14f43e9-5102-45bc-b394-c92520c2c0bd-bluemix.cloudant.com";
 
 // sanitise a string so that it can be used safely in a Lucene search
-var sanitise = function(str) {
+var sanitise = function(str, withquotes) {
   var s = str.replace(/'/g,"");
   s = s.replace(/\W/g," ");
-  return '"' + s + '"';
+  if(withquotes) {
+    return '"' + s + '"';     
+  } else {
+    return s;
+  }
 }
 
 // from https://github.com/balupton/jquery-sparkle/blob/master/scripts/resources/core.string.js
@@ -106,7 +110,7 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
   var q = "";
   var sort = null;
   if(searchText.length>0) {
-    var niceText = sanitise(searchText);
+    var niceText = sanitise(searchText, false);
     q = niceText;
    // q = "(name:"+niceText + " OR body:"+niceText+ " OR full_name:"+niceText + " OR description:"+niceText+")";
   } else {
@@ -117,7 +121,7 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
   // add filter to the query string - filter is an array of stuff
   for(var i in filter) {
     q += " AND ";
-    q += filter[i].key + ":" + sanitise(filter[i].value);
+    q += filter[i].key + ":" + sanitise(filter[i].value, true);
   }
   
   // render the query and filter
@@ -191,109 +195,115 @@ var renderFacetGroup = function(facet, title, datacounts) {
 var renderSerps = function(data, filter) {
   
   renderedSerps = data;
-    
-  var extraURLS = [ 
-     { title: "Github", element: "githuburl", icon: "fa-github-square", color: "label-default"},
-     { title: "Video", element: "videourl", icon: "fa-video-camera", color: "label-warning", type:"Video"},
-     { title: "Demo", element: "demourl", icon: "fa-laptop", color: "label-info"},
-     { title: "Documentation", element: "documentationurl", icon: "fa-vbook", color: "label-success"},
-  ];  
-    
-  // render docs
   var html = "";
-  for(var i in data.rows) {
-    var doc = data.rows[i].doc;
-    var truncatedDesc = truncateDescription(doc.description);
-    var truncatedURL = truncateURL(doc.url);
-    html += '<div class="row">';
-    html += '<div class="col-xs-12 results-document">';    
-    html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a>';
-    for(var j in extraURLS) {
-      var u = extraURLS[j];
-      if(doc[u.element] || (u.type && doc.type == u.type)) {
-        html += '&nbsp;<span class="label '+ u.color + '"><i class="fa ' + u.icon+ '"></i></span>';
-      }
-    }
-    html += '</h3>';
-    html += '<h4><a href="' + doc.url + '" target="_new">' + truncatedURL + '</a></h4>';
-    html += '<div class="description show-less'+ i +'">' + truncatedDesc;
-    html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
-    html += '</div>';
     
+  if(!data.rows || data.rows.length == 0 )  {
+    html = '<div class="jumbotron"><h3>There are no results to match you search criteria. Please try again</h3></div>';
+  } else {
+    var extraURLS = [ 
+       { title: "Github", element: "githuburl", icon: "fa-github-square", color: "label-default"},
+       { title: "Video", element: "videourl", icon: "fa-video-camera", color: "label-warning", type:"Video"},
+       { title: "Demo", element: "demourl", icon: "fa-laptop", color: "label-info"},
+       { title: "Documentation", element: "documentationurl", icon: "fa-vbook", color: "label-success"},
+    ];  
     
-    
-    html += '<div class="row expanded-result-row show-more'+ i +' show-more-default">';
-    if (doc.imageurl) {
-      html += '<div class="col-xs-2 show-more'+ i +' show-more-default" id="result-image-placeholder">';
-      html += '<img src="' + doc.imageurl + '" class="img-responsive"/>';
-      html += '</div>';
-    }   
-    
-    
-    html += '<div class="col-xs-10 show-more'+ i +' show-more-default">';
-    html += '<div class="description show-more'+ i +' show-more-default">' + doc.description;
-    html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
-    html += '</div>';
-    
-    html += '<div class="facets show-more'+ i +' show-more-default">';
-     for(var j in doc.topic) {
-      html += '<span>' + doc.topic[j] + '</span>'
-    }
-    for(var j in doc.technologies) {
-      html += '<span>' + doc.technologies[j] + '</span>'
-    }
-    if(doc.languages && doc.languages.length>0) {
-      for(var j in doc.languages) {
-        html += '<span>' + doc.languages[j] + '</span>'
-      }
-    }
-    if(doc.level) {
-      html += '<span>' + doc.level + '</span>'
-    }
-    html += '</div>';
-    
-    // additional links
-    html += '<div class="row">';
-    var num = 0;
-    for(var j in extraURLS) {
-      var u = extraURLS[j];
-      if(doc[u.element] || (u.type && doc.type == u.type)) {
-        html += '<div class="col-xs-3">';
-        html += '<a href="' + doc[u.element] + '" target="_new">';
-        html += '<span class="label '+ u.color + '"><i class="fa ' + u.icon+ '"></i></span>';
-        html += '</a>';
-        html += '&nbsp; ';
-        html += '<a href="' + doc[u.element] + '" target="_new">';
-        html += u.title;
-        html += '</a>';
-        html += '</div>';
- /*       num++;
-        if(num%2 == 0) {
-          html += '</div><div class="row">';
-        }*/
-      }
-    }
+    // render docs
 
-    html += "</div>";
+    for(var i in data.rows) {
+      var doc = data.rows[i].doc;
+      var truncatedDesc = truncateDescription(doc.description);
+      var truncatedURL = truncateURL(doc.url);
+      html += '<div class="row">';
+      html += '<div class="col-xs-12 results-document">';    
+      html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a>';
+      for(var j in extraURLS) {
+        var u = extraURLS[j];
+        if(doc[u.element] || (u.type && doc.type == u.type)) {
+          html += '&nbsp;<span class="label '+ u.color + '"><i class="fa ' + u.icon+ '"></i></span>';
+        }
+      }
+      html += '</h3>';
+      html += '<h4><a href="' + doc.url + '" target="_new">' + truncatedURL + '</a></h4>';
+      html += '<div class="description show-less'+ i +'">' + truncatedDesc;
+      html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
+      html += '</div>';
     
     
-    html += '</div>';
-    html += '</div>';
+    
+      html += '<div class="row expanded-result-row show-more'+ i +' show-more-default">';
+      if (doc.imageurl) {
+        html += '<div class="col-xs-2 show-more'+ i +' show-more-default" id="result-image-placeholder">';
+        html += '<img src="' + doc.imageurl + '" class="img-responsive"/>';
+        html += '</div>';
+      }   
     
     
-    html += '<div class="result-expand-collapse display-less" data-result-index="' + i + '" data-result-id="' + doc._id + '">';
+      html += '<div class="col-xs-10 show-more'+ i +' show-more-default">';
+      html += '<div class="description show-more'+ i +' show-more-default">' + doc.description;
+      html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
+      html += '</div>';
     
-    html += '<div class="more-text show-less'+ i +'" data-result-index="' + i + '" data-result-id="' + doc._id + '">More <span class="glyphicon glyphicon-menu-down" data-result-index="' + i + '" data-result-id="' + doc._id + '" aria-hidden="true"></span></div>';
+      html += '<div class="facets show-more'+ i +' show-more-default">';
+       for(var j in doc.topic) {
+        html += '<span>' + doc.topic[j] + '</span>'
+      }
+      for(var j in doc.technologies) {
+        html += '<span>' + doc.technologies[j] + '</span>'
+      }
+      if(doc.languages && doc.languages.length>0) {
+        for(var j in doc.languages) {
+          html += '<span>' + doc.languages[j] + '</span>'
+        }
+      }
+      if(doc.level) {
+        html += '<span>' + doc.level + '</span>'
+      }
+      html += '</div>';
     
-    html += '<div class="less-text show-more'+ i +' show-more-default">Less <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></div>';
+      // additional links
+      html += '<div class="row">';
+      var num = 0;
+      for(var j in extraURLS) {
+        var u = extraURLS[j];
+        if(doc[u.element] || (u.type && doc.type == u.type)) {
+          html += '<div class="col-xs-3">';
+          html += '<a href="' + doc[u.element] + '" target="_new">';
+          html += '<span class="label '+ u.color + '"><i class="fa ' + u.icon+ '"></i></span>';
+          html += '</a>';
+          html += '&nbsp; ';
+          html += '<a href="' + doc[u.element] + '" target="_new">';
+          html += u.title;
+          html += '</a>';
+          html += '</div>';
+   /*       num++;
+          if(num%2 == 0) {
+            html += '</div><div class="row">';
+          }*/
+        }
+      }
+
+      html += "</div>";
     
-    html += '</div>';
+    
+      html += '</div>';
+      html += '</div>';
     
     
-    html += '</div>';
-    html += '</div>';
+      html += '<div class="result-expand-collapse display-less" data-result-index="' + i + '" data-result-id="' + doc._id + '">';
+    
+      html += '<div class="more-text show-less'+ i +'" data-result-index="' + i + '" data-result-id="' + doc._id + '">More <span class="glyphicon glyphicon-menu-down" data-result-index="' + i + '" data-result-id="' + doc._id + '" aria-hidden="true"></span></div>';
+    
+      html += '<div class="less-text show-more'+ i +' show-more-default">Less <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></div>';
+    
+      html += '</div>';
+    
+    
+      html += '</div>';
+      html += '</div>';
+    }
   }
-  
+    
+
   $('#results').html(html);
   
   // render facets
@@ -389,7 +399,7 @@ var onload = function() {
     // record the inital list of facets away for safekeeping
     allfacets = data.counts;
     searchResults = data;
-    renderSerps(data,filter);
+  //  
 
     // parse the query string
     var hash = location.hash;
@@ -417,7 +427,9 @@ var onload = function() {
           $("div.more-text[data-result-id="+selectedId+"]").click()        
         }
       });
-    } 
+    } else {
+      renderSerps(data,filter);
+    }
   });
  
   // Suppress anchor firing and show modal when clicked
