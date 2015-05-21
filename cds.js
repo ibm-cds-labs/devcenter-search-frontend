@@ -267,7 +267,7 @@ var renderSerps = function(data, filter) {
     html += '<a href="Javascript:clearAllFilters()">Clear</a>';
   }
   html += '</div>';
-  html += renderFacetGroup("type","Type",data.counts);
+//  html += renderFacetGroup("type","Type",data.counts);
   html += renderFacetGroup("topic","Topics",data.counts);
   html += renderFacetGroup("technology","Technologies",data.counts);
   html += renderFacetGroup("language","Languages",data.counts);
