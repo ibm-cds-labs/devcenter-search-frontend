@@ -191,6 +191,13 @@ var renderSerps = function(data, filter) {
   
   renderedSerps = data;
     
+  var extraURLS = [ 
+     { title: "Github", element: "githuburl", icon: "fa-github-square", color: "label-default"},
+     { title: "Video", element: "videourl", icon: "fa-video-camera", color: "label-warning", type:"Video"},
+     { title: "Demo", element: "demourl", icon: "fa-laptop", color: "label-info"},
+     { title: "Documentation", element: "documentationurl", icon: "fa-vbook", color: "label-success"},
+  ];  
+    
   // render docs
   var html = "";
   for(var i in data.rows) {
@@ -200,14 +207,12 @@ var renderSerps = function(data, filter) {
     html += '<div class="row">';
     html += '<div class="col-xs-12 results-document">';    
     html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a>';
-    if(doc.githuburl)
-      html += '&nbsp;<span class="label label-default"><i class="fa fa-github-square"></i></span>';
-    if(doc.videourl || doc.type=="Video")
-      html += '&nbsp;<span class="label label-warning"><i class="fa fa-video-camera"></i></span>';
-    if(doc.demo)
-      html += '&nbsp;<span class="label label-info"><i class="fa fa-laptop"></i></span>';
-    if(doc.documentationurl)
-      html += '&nbsp;<span class="label label-success"><i class="fa fa-book"></i></span>';
+    for(var j in extraURLS) {
+      var u = extraURLS[j];
+      if(doc[u.element] || (u.type && doc.type == u.type)) {
+        html += '&nbsp;<span class="label '+ u.color + '"><i class="fa ' + u.icon+ '"></i></span>';
+      }
+    }
     html += '</h3>';
     html += '<h4><a href="' + doc.url + '" target="_new">' + truncatedURL + '</a></h4>';
     html += '<div class="description show-less'+ i +'">' + truncatedDesc;
@@ -217,14 +222,11 @@ var renderSerps = function(data, filter) {
     
     
     html += '<div class="row expanded-result-row show-more'+ i +' show-more-default">';
-    html += '<div class="col-xs-2 show-more'+ i +' show-more-default" id="result-image-placeholder">';
     if (doc.imageurl) {
+      html += '<div class="col-xs-2 show-more'+ i +' show-more-default" id="result-image-placeholder">';
       html += '<img src="' + doc.imageurl + '" class="img-responsive"/>';
-    } else {
-      html += '&nbsp;';
-    }
-    html += '</div>';
-     
+      html += '</div>';
+    }   
     
     
     html += '<div class="col-xs-10 show-more'+ i +' show-more-default">';
@@ -248,6 +250,27 @@ var renderSerps = function(data, filter) {
       html += '<span>' + doc.level + '</span>'
     }
     html += '</div>';
+    
+    // additional links
+    html += '<div class="row">';
+    var num = 0;
+    for(var j in extraURLS) {
+      var u = extraURLS[j];
+      if(doc[u.element] || (u.type && doc.type == u.type)) {
+        html += '<div class="col-xs-3">';
+        html += '<a href="' + doc[u.element] + '" target="_new">';
+        html += '<span class="label '+ u.color + '"><i class="fa ' + u.icon+ '"></i></span>';
+        html += '&nbsp; ' + u.title;
+        html += '</a>';
+        html += '</div>';
+ /*       num++;
+        if(num%2 == 0) {
+          html += '</div><div class="row">';
+        }*/
+      }
+    }
+
+    html += "</div>";
     
     
     html += '</div>';
