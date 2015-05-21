@@ -107,7 +107,8 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
   var sort = null;
   if(searchText.length>0) {
     var niceText = sanitise(searchText);
-    q = "(name:"+niceText + " OR body:"+niceText+ " OR full_name:"+niceText + " OR description:"+niceText+")";
+    q = niceText;
+   // q = "(name:"+niceText + " OR body:"+niceText+ " OR full_name:"+niceText + " OR description:"+niceText+")";
   } else {
     q = "*:*";
     sort = '["-date"]'; // newest first
