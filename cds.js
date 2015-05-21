@@ -199,8 +199,8 @@ var renderSerps = function(data, filter) {
     var truncatedURL = truncateURL(doc.url);
     html += '<div class="row">';
     html += '<div class="col-xs-12 results-document">';    
-    html += '<h3><a href="' + doc.url + '" target="_new" class="result_link" data-result-index="' + i + '" data-result-id="' + doc._id + '">'+doc.name+'</a></h3>';
-    html += '<h4><a href="' + doc.url + '">' + truncatedURL + '</a></h4>';
+    html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a></h3>';
+    html += '<h4><a href="' + doc.url + '" target="_new">' + truncatedURL + '</a></h4>';
     html += '<div class="description show-less'+ i +'">' + truncatedDesc;
     html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
     html += '</div>';
@@ -247,7 +247,7 @@ var renderSerps = function(data, filter) {
     
     html += '<div class="result-expand-collapse display-less" data-result-index="' + i + '" data-result-id="' + doc._id + '">';
     
-    html += '<div class="more-text show-less'+ i +'">More <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>';
+    html += '<div class="more-text show-less'+ i +'" data-result-index="' + i + '" data-result-id="' + doc._id + '">More <span class="glyphicon glyphicon-menu-down" data-result-index="' + i + '" data-result-id="' + doc._id + '" aria-hidden="true"></span></div>';
     
     html += '<div class="less-text show-more'+ i +' show-more-default">Less <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></div>';
     
@@ -377,14 +377,17 @@ var onload = function() {
       doSearch(searchText, filter, false, function(err, data) {
         searchResults = data;
         renderSerps(data, filter);
+        if (selectedId) {
+          $("div.more-text[data-result-id="+selectedId+"]").click()        
+        }
       });
     } 
   });
  
   // Suppress anchor firing and show modal when clicked
-  $(document).on("click", ".result_link", function(e) {
+/*  $(document).on("click", ".result_link", function(e) {
     e.preventDefault();
-  });
+  });*/
   
   // Expand/collapse when more/less is clicked for result
   
@@ -423,6 +426,15 @@ var onload = function() {
   
 }
 
+
+// modify the URL to indicate that a result id has been opend with the 'more'
+$(document).on("click", ".more-text", function(t) { 
+  var el = $(t.target);
+  console.log(el);
+  var qs = generateQueryString(searchText, filter, $(el).attr('data-result-id'));
+  window.location.href= window.location.pathname+"#?"+qs; 
+})
+
 // when a checkbox is ticked
 var checktick = function(ctrl) {
 
@@ -434,7 +446,6 @@ var checktick = function(ctrl) {
   } else {
     removeFilter(facet, value);
   }
-  
 }
 
 // when the index page's search form is submitted
