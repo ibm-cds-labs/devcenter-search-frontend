@@ -267,11 +267,12 @@ var renderSerps = function(data, filter) {
         var u = extraURLS[j];
         if(doc[u.element] || (u.type && doc.type == u.type)) {
           html += '<div class="col-xs-3">';
-          html += '<a href="' + doc[u.element] + '" target="_new">';
+          var url = (doc[u.element])?doc[u.element] : doc.url; // for type=Video
+          html += '<a href="' + url + '" target="_new">';
           html += '<span class="label '+ u.color + '"><i class="fa ' + u.icon+ '"></i></span>';
           html += '</a>';
           html += '&nbsp; ';
-          html += '<a href="' + doc[u.element] + '" target="_new">';
+          html += '<a href="' + url + '" target="_new">';
           html += u.title;
           html += '</a>';
           html += '</div>';
