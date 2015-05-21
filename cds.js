@@ -199,7 +199,16 @@ var renderSerps = function(data, filter) {
     var truncatedURL = truncateURL(doc.url);
     html += '<div class="row">';
     html += '<div class="col-xs-12 results-document">';    
-    html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a></h3>';
+    html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a>';
+    if(doc.githuburl)
+      html += '&nbsp;<span class="label label-default"><i class="fa fa-github-square"></i></span>';
+    if(doc.videourl || doc.type=="Video")
+      html += '&nbsp;<span class="label label-warning"><i class="fa fa-video-camera"></i></span>';
+    if(doc.demo)
+      html += '&nbsp;<span class="label label-info"><i class="fa fa-laptop"></i></span>';
+    if(doc.documentationurl)
+      html += '&nbsp;<span class="label label-success"><i class="fa fa-book"></i></span>';
+    html += '</h3>';
     html += '<h4><a href="' + doc.url + '" target="_new">' + truncatedURL + '</a></h4>';
     html += '<div class="description show-less'+ i +'">' + truncatedDesc;
     html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
@@ -404,8 +413,8 @@ var onload = function() {
   });
   
   var expandResult = function(index) {
-    console.log('expand');
-    console.log(index);
+  //  console.log('expand');
+  //  console.log(index);
     
     
     $('.show-more'+ index).show();
@@ -414,8 +423,8 @@ var onload = function() {
   };
   
   var collapseResult = function(index) {
-    console.log('collapse');
-    console.log(index);
+ //   console.log('collapse');
+ //    console.log(index);
     
     
     $('.show-less'+ index).show();
@@ -430,7 +439,6 @@ var onload = function() {
 // modify the URL to indicate that a result id has been opend with the 'more'
 $(document).on("click", ".more-text", function(t) { 
   var el = $(t.target);
-  console.log(el);
   var qs = generateQueryString(searchText, filter, $(el).attr('data-result-id'));
   window.location.href= window.location.pathname+"#?"+qs; 
 })
