@@ -260,7 +260,10 @@ var renderSerps = function(data, filter) {
         html += '<div class="col-xs-3">';
         html += '<a href="' + doc[u.element] + '" target="_new">';
         html += '<span class="label '+ u.color + '"><i class="fa ' + u.icon+ '"></i></span>';
-        html += '&nbsp; ' + u.title;
+        html += '</a>';
+        html += '&nbsp; ';
+        html += '<a href="' + doc[u.element] + '" target="_new">';
+        html += u.title;
         html += '</a>';
         html += '</div>';
  /*       num++;
