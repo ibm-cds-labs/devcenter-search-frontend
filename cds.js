@@ -204,7 +204,7 @@ var renderSerps = function(data, filter) {
        { title: "Github", element: "githuburl", icon: "fa-github-square", color: "label-default"},
        { title: "Video", element: "videourl", icon: "fa-video-camera", color: "label-warning", type:"Video"},
        { title: "Demo", element: "demourl", icon: "fa-laptop", color: "label-info"},
-       { title: "Documentation", element: "documentationurl", icon: "fa-vbook", color: "label-success"},
+       { title: "Documentation", element: "documentationurl", icon: "fa-book", color: "label-success"},
     ];  
     
     // render docs
