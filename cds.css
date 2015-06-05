@@ -299,17 +299,17 @@ h4 {
   color: #fff;
 }
 
-#page-id-165 .pn-pcon {
+body.page-id-165 .pn-pcon {
   margin: 0;
   width: auto;
   max-width: none;
   padding: 0;
 }
-#page-id-165 .pn-columns {
+body.page-id-165 .pn-columns {
   margin: 0;
 }
 
-#page-id-165 .pn-page-header .pn-page-title {
+body.page-id-165 .pn-page-header .pn-page-title {
   padding-top: 0;
   margin-bottom: 0; 
 }
@@ -353,7 +353,7 @@ h4 {
   border-radius: 75px;
 }
 
-#page-id-165 .advocate-social {
+body.page-id-165 .advocate-social {
   list-style-type: none;
   padding: 0;
   margin: 20px 0 0 0;
