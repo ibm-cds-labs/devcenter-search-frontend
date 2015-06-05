@@ -290,6 +290,88 @@ h4 {
 }
 
 
+/* OUR ADVOCATES */
+
+.advocates-header {
+  background: #337AB7;
+  color: #fff;
+}
+
+
+.post-165 h1 {
+  font-size: 24px;
+}
+
+.post-165 h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+
+.post-165 h4 {
+  font-size: 15px;
+  color: #ccc;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.post-165 .advocate-bio {
+  color: #000;
+}
+
+.advocate-photo-placeholder {
+  width: 150px;
+  height: 150px;
+  background: #dbdbdb;
+  -moz-border-radius: 75px;
+  -webkit-border-radius: 75px;
+  border-radius: 75px;
+}
+
+.advocate-social {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+  width: 150px;
+  text-align: center;
+}
+  .advocate-social li {
+    display: inline-block;
+    padding-right: 10px;
+  }
+  .advocate-social li:last-child {
+    padding-right: 0;
+  }
+
+  .advocate-social a {
+    text-decoration: none;
+  }
+
+  .advocate-social .icon-twitter {
+    content: url(assets/icon-twitter.png);
+    opacity: 0.5;
+    width: 16px;
+    height: 16px;
+  }
+
+  .advocate-social .icon-github {
+    content: url(assets/icon-github.png);
+    opacity: 0.5;
+    width: 16px;
+    height: 16px;
+  }
+
+  .advocate-social .icon-email {
+    content: url(assets/icon-email.png);
+    opacity: 0.5;
+    width: 16px;
+    height: 16px;
+  }
+
+
 /* PRODUCTS */
 
 .products-header {
