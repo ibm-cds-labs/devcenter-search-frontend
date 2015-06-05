@@ -292,14 +292,29 @@ h4 {
 
 /* OUR ADVOCATES */
 
+
+
 .advocates-header {
   background: #337AB7;
   color: #fff;
 }
 
+#page-id-165 .pn-pcon {
+  margin: 0;
+  width: auto;
+  max-width: none;
+  padding: 0;
+}
+#page-id-165 .pn-columns {
+  margin: 0;
+}
 
 .post-165 h1 {
   font-size: 24px;
+  margin-left: 30px;
+  margin-bottom: 50px;
+  margin-top: 10px;
+  margin-bottom: 80px;
 }
 
 .post-165 h3 {
@@ -334,7 +349,7 @@ h4 {
 .advocate-social {
   list-style-type: none;
   padding: 0;
-  margin-top: 20px;
+  margin: 20px 0 0 0;
   width: 150px;
   text-align: center;
 }
