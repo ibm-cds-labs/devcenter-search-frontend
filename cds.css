@@ -292,8 +292,6 @@ h4 {
 
 /* OUR ADVOCATES */
 
-
-
 .advocates-header {
   background: #337AB7;
   color: #fff;
@@ -310,19 +308,14 @@ body.page-id-165 .pn-columns {
 }
 
 body.page-id-165 .pn-page-header .pn-page-title {
-  padding-top: 0;
-  margin-bottom: 0; 
+  margin-bottom: 80px;
 }
 
 .post-165 h1 {
   font-size: 24px;
   margin-left: 30px;
-  margin-bottom: 50px;
   margin-top: 10px;
-  margin-bottom: 80px;
 }
-
-
 
 .post-165 h3 {
   font-size: 15px;
@@ -331,7 +324,6 @@ body.page-id-165 .pn-page-header .pn-page-title {
   margin-top: 0;
   margin-bottom: 6px;
 }
-
 
 .post-165 h4 {
   font-size: 15px;
