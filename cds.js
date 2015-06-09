@@ -155,6 +155,11 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
     if (callback) {
       callback(null, data);
     }
+    
+    //Track the search results, do not log the initial page load as a search
+    if ( searchText !== "" || (filter && $.isArray(filter) && filter.length > 0 ) ){
+    	_paq.push(['trackSiteSearch', searchText, JSON.stringify(filter), data ? (data.total_rows || 0) : 0 ] );
+    }
   });
   
 };
@@ -306,6 +311,9 @@ var renderSerps = function(data, filter) {
     
 
   $('#results').html(html);
+  
+  //Reset the tracking for these elements
+  _paq.push([ enableLinkTrackingForNode, $('#results')]);
   
   // render facets
   var html ="";
