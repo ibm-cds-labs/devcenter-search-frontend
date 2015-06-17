@@ -403,7 +403,11 @@ var clearAllFilters = function() {
 }
 
 // onload perform a search for "everything"
+var firsttime=true;
 var onload = function() {
+  if(firsttime==false) 
+    return
+  firsttime=false;
   searchText = "";
   filter = [];
   
@@ -451,10 +455,10 @@ var onload = function() {
   });*/
   
   // Expand/collapse when more/less is clicked for result
-  
+//  console.log("ON LOAD");
   $(document).on("click", ".result-expand-collapse", function(e) {
     var resultIndex = $(this).attr('data-result-index');
-    
+//    console.log("CLICK");
     if ($(this).hasClass('display-less')) {
       expandResult(resultIndex);
       $(this).removeClass('display-less');
@@ -465,8 +469,8 @@ var onload = function() {
   });
   
   var expandResult = function(index) {
-  //  console.log('expand');
-  //  console.log(index);
+ //   console.log('expand');
+//    console.log(index);
     
     
     $('.show-more'+ index).show();
@@ -475,8 +479,8 @@ var onload = function() {
   };
   
   var collapseResult = function(index) {
- //   console.log('collapse');
- //    console.log(index);
+  //  console.log('collapse');
+//     console.log(index);
     
     
     $('.show-less'+ index).show();
