@@ -323,7 +323,7 @@ var renderSerps = function(data, filter) {
   var html ="";
   html += '<div class="clearall">';
   if(filter.length > 0) {
-    html += '<a href="Javascript:clearAllFilters()">Clear</a>';
+    html += '<div class="clear-button"><a href="Javascript:clearAllFilters()">Clear</a></div>';
   }
   html += '</div>';
 //  html += renderFacetGroup("type","Type",data.counts);
