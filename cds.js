@@ -149,7 +149,7 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
   $.ajax(obj).done(function(data) {
     var qs = generateQueryString(searchText,filter);
     if(!dontChangeURL) {
-      window.location.href= window.location.pathname+"#?"+qs;      
+      window.location.href= window.location.pathname+"#!"+qs;      
     }
     $('#loading').hide();
     if (callback) {
@@ -423,8 +423,8 @@ var onload = function() {
     if(hash) {
       
       // strip bits
-      hash = hash.replace(/^#/,"");
-      hash = hash.replace(/^\?/,"");
+      hash = hash.replace(/^#!/,"");
+     // hash = hash.replace(/^\/,"");
       hash = hash.queryStringToJSON();
       
       // extract search and filter
@@ -496,7 +496,7 @@ var onload = function() {
 $(document).on("click", ".more-text", function(t) { 
   var el = $(t.target);
   var qs = generateQueryString(searchText, filter, $(el).attr('data-result-id'));
-  window.location.href= window.location.pathname+"#?"+qs; 
+  window.location.href= window.location.pathname+"#!"+qs; 
 })
 
 // when a checkbox is ticked
@@ -517,7 +517,7 @@ var indexSearchSubmit = function() {
   return false;
   var searchText = $('#bigsearchinput').val();
   var qs = generateQueryString(searchText,[]);
-  window.location.href="resources.html#?"+qs;
+  window.location.href="resources.html#!"+qs;
   return false;
 }
 
