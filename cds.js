@@ -177,7 +177,8 @@ var renderFacetGroup = function(facet, title, datacounts) {
       live = true;
     }
     html += '<div class="row facet-row">';
-    html += '<div class="col-xs-2"><input id="facet' + facet+i + '" type="checkbox" onclick="checktick(this)"';
+    html += '<input id="facet' + facet+i + '" type="checkbox" onclick="checktick(this)"';
+    // html += '<div class="col-xs-2"><input id="facet' + facet+i + '" type="checkbox" onclick="checktick(this)"';
     html += ' data-facet="'+facet+'" data-value="' + j + '"';
     if(!live) {
       html += " disabled";
@@ -185,15 +186,15 @@ var renderFacetGroup = function(facet, title, datacounts) {
     if(isFilterSelected(facet, j)) {
       html += " checked";
     }
-    html +='></div>';
-    html += '<div class="col-xs-10">';
+    html +='>'; //'</div>';
+    // html += '<div class="col-xs-10">';
     var c = "";
     if(!live) {
       c = "muted";
     }
     html += '<label for="facet'+facet+i+'" class="'+ c+ '">' + j + '</label>';    
     html += '</div>';    
-    html += '</div>';    
+    // html += '</div>';
     i++;
   }
   return html;
@@ -230,7 +231,7 @@ var renderSerps = function(data, filter) {
         }
       }
       html += '</h3>';
-      html += '<h4><a href="' + doc.url + '" target="_new">' + truncatedURL + '</a></h4>';
+      html += '<div class="results-document-url"><a href="' + doc.url + '" target="_new">' + truncatedURL + '</a></div>';
       html += '<div class="description show-less'+ i +'">' + truncatedDesc;
       html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
       html += '</div>';
