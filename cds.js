@@ -106,6 +106,7 @@ var disableAllCheckBoxes = function() {
 // filter is an object like {topic: "NoSQL", language: "HTTP"}
 var doSearch = function(searchText,filter, dontChangeURL, callback) {
   disableAllCheckBoxes();
+  $('#clearfilters').hide();
   $('#loading').show();
   var q = "";
   var sort = null;
