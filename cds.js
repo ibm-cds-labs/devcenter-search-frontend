@@ -220,8 +220,7 @@ var renderSerps = function(data, filter) {
       var doc = data.rows[i].doc;
       var truncatedDesc = truncateDescription(doc.description);
       var truncatedURL = truncateURL(doc.url);
-      html += '<div class="row">';
-      html += '<div class="col-xs-12 results-document">';    
+      html += '<div class="results-document">';    
       html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a>';
       for(var j in extraURLS) {
         var u = extraURLS[j];
@@ -234,7 +233,6 @@ var renderSerps = function(data, filter) {
       html += '<div class="description show-less'+ i +'">' + truncatedDesc;
       html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
       html += '</div>';
-    
     
     
       html += '<div class="row expanded-result-row show-more'+ i +' show-more-default">';
@@ -306,7 +304,6 @@ var renderSerps = function(data, filter) {
       html += '</div>';
     
     
-      html += '</div>';
       html += '</div>';
     }
   }
