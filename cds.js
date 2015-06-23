@@ -320,7 +320,10 @@ var renderSerps = function(data, filter) {
   var html ="";
   html += '<div class="clearall">';
   if(filter.length > 0) {
-    html += '<div class="clear-button"><a href="Javascript:clearAllFilters()">Clear</a></div>';
+    $('#clearfilters').show();
+    // html += '<div class="clear-button"><a href="Javascript:clearAllFilters()">Clear</a></div>';
+  }else{
+    $('#clearfilters').hide();
   }
   html += '</div>';
 //  html += renderFacetGroup("type","Type",data.counts);
