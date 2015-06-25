@@ -231,7 +231,7 @@ var renderSerps = function(data, filter) {
         }
       }
       html += '</h3>';
-      html += '<div class="results-document-url"><a href="' + doc.url + '" target="_new">' + truncatedURL + '</a></div>';
+      html += '<div class="results-document-url">' + truncatedURL + '</div>';
       html += '<div class="description show-less'+ i +'">' + truncatedDesc;
       html += '<a class="editlink" rel="nofollow" target="_new" href="https://devcenter.mybluemix.net/doc/'+ doc._id +'"><span class="editicon glyphicon glyphicon-share-alt"></span></a>';
       html += '</div>';
