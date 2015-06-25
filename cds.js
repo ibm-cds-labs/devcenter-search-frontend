@@ -221,7 +221,7 @@ var renderSerps = function(data, filter) {
     for(var i in data.rows) {
       var doc = data.rows[i].doc;
       var truncatedDesc = truncateDescription(doc.description);
-      var truncatedURL = truncateURL(doc.url);
+      var truncatedURL = doc.url; // let's not truncate for now // truncateURL(doc.url);
       html += '<div class="results-document">';    
       html += '<h3><a href="' + doc.url + '" target="_new" class="result_link">'+doc.name+'</a>';
       for(var j in extraURLS) {
