@@ -180,7 +180,7 @@ var onload = function() {
       keys = hash.keys.split(',');
       getDocument(keys, false, function(err, data) {
         if(!data.rows || data.rows.length == 0 )  {
-          html = '<div class="jumbotron"><h3>There are no results to match you search criteria. Please try again</h3></div>';
+          html = '<div class="jumbotron"><h3>There are no results to match your search criteria. Please try again</h3></div>';
           $('#resources').html(html);
         } else {
           for (var i in data.rows) {
@@ -192,3 +192,8 @@ var onload = function() {
   }
 }
 $(document).ready(onload);
+$(window).on('hashchange', function() {
+  $('#resources').html('');
+  firsttime=true;//alert('hash changed');
+  onload();
+});
