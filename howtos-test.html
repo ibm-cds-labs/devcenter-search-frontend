@@ -1,0 +1,46 @@
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<div class="how-tos">
+
+    <div class="row">
+      <div class="col-sm-12">
+        <p class="intro">From IBMers, and developers out in the wild.</p>
+      </div>
+    </div>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<!-- top row with search bar -->
+<div class="row">
+<div class="col-sm-12">
+  <form class="text-search" onsubmit="return submitForm()">
+        <input type="text" class="form-control" id="searchtext" placeholder="Search how-tos" />
+  </form>
+</div>
+</div>
+<!-- end row -->
+
+<div class="row" id="filter-results-row"><!-- next row with filter things -->
+  <div class="col-sm-2"><!-- left column -->
+    <div id="facet-header">
+      <span id="loading" style="float:right;display:none"><i class="fa fa-lg fa-spinner fa-pulse"></i></span>
+      <span id="clearfilters" style="float:right;display:none">
+        <a href="Javascript:clearAllFilters()"><button class="btn btn-default btn-xs">Clear</button></a></span>
+      <h3>Filters</h3>
+    </div>
+    <div id="facets"></div><!-- facets go here -->
+  </div>
+
+  <div class="col-sm-10"><!-- right column -->
+    <div class="row" id="results-row"><!-- results go here -->
+      <div id="results" class="col-sm-12"></div>
+    </div>
+  </div> <!-- right column-->
+</div>
+</div>
+
+<!--<script src="//metrics-collector.mybluemix.net/tracker.js" siteid="cds.search.engine"></script>
+-->
+<script src="cds-tools.js"></script>
+<script src="cds.js"></script>
+

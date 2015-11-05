@@ -1,4 +1,3 @@
-
 // the current state of the fiter
 var filter = [];
 var allfacets = {};
@@ -131,7 +130,7 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
   var qs = {
       q:q,
       limit:limit,
-      counts: '["topic","technology","type","level","language"]',
+      counts: '["topic","technologies","level","languages"]',
       include_docs:true
     };       
   if(sort) {
@@ -141,7 +140,7 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
     $('#sort').html("");
   }
   var obj = {
-    url: CLOUDANT_URL + "/dw/_design/search/_search/search",
+    url: CLOUDANT_URL + "/devcenter/_design/search/_search/search",
     data: qs,
     dataType: "json",
     method: "get"
@@ -330,8 +329,8 @@ var renderSerps = function(data, filter) {
   html += '</div>';
 //  html += renderFacetGroup("type","Type",data.counts);
   html += renderFacetGroup("topic","Topics",data.counts);
-  html += renderFacetGroup("technology","Technologies",data.counts);
-  html += renderFacetGroup("language","Languages",data.counts);
+  html += renderFacetGroup("technologies","Technologies",data.counts);
+  html += renderFacetGroup("languages","Languages",data.counts);
   html += renderFacetGroup("level","Levels",data.counts);
 
   $('#facets').html(html);
