@@ -8,7 +8,7 @@ var CLOUDANT_URL = "https://d14f43e9-5102-45bc-b394-c92520c2c0bd-bluemix.cloudan
 // sanitise a string so that it can be used safely in a Lucene search
 var sanitise = function(str, withquotes) {
   var s = str.replace(/'/g,"");
-  s = s.replace(/\W/g," ");
+  s = s.replace(/[^A-Za-z0-9_\.]/g," ");
   if(withquotes) {
     return '"' + s + '"';     
   } else {
