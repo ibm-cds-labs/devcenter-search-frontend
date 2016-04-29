@@ -3,7 +3,6 @@ var filter = [];
 var allfacets = {};
 var searchResults = {};
 var renderedSerps = {};
-var CLOUDANT_URL = "https://d14f43e9-5102-45bc-b394-c92520c2c0bd-bluemix.cloudant.com";
 
 // sanitise a string so that it can be used safely in a Lucene search
 var sanitise = function(str, withquotes) {
@@ -140,7 +139,7 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
     $('#sort').html("");
   }
   var obj = {
-    url: CLOUDANT_URL + "/devcenter/_design/search/_search/search",
+    url: "https://search-service.mybluemix.net/search",
     data: qs,
     dataType: "json",
     method: "get"
