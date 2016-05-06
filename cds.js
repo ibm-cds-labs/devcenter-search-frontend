@@ -3,6 +3,7 @@ var filter = [];
 var allfacets = {};
 var searchResults = {};
 var renderedSerps = {};
+var namespace="Cloud Data Services";
 
 // sanitise a string so that it can be used safely in a Lucene search
 var sanitise = function(str, withquotes) {
@@ -122,6 +123,10 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
     q += " AND ";
     q += filter[i].key + ":" + sanitise(filter[i].value, true);
   }
+
+  // add namespace filter
+  q = "(" + q + ") AND namespace:'"+namespace+"'"; 
+  console.log(q);
   
   // render the query and filter
   $('#qs').html(q);  
