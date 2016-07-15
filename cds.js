@@ -125,7 +125,7 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
   }
 
   // add namespace filter
-  q = "(" + q + ") AND namespace:'"+namespace+"'"; 
+  q += "(" + q + ") AND namespace:'"+namespace+"'"; 
   console.log(q);
   
   // render the query and filter
