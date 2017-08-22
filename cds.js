@@ -130,7 +130,7 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
   
   // render the query and filter
   $('#qs').html(q);  
-  var limit = 20;      
+  var limit = $('#searchtext').data("limit") || 25;      
   var qs = {
       q:q,
       limit:limit,
