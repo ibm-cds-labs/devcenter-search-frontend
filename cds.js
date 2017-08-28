@@ -4,6 +4,14 @@ var allfacets = {};
 var searchResults = {};
 var renderedSerps = {};
 var namespace="Cloud Data Services";
+// last search performed params
+var lastsearch = {
+  searchText: '',
+  filter: [],
+  dontChangeURL: false, 
+  bookmark: '',
+  page: 0
+}
 
 // sanitise a string so that it can be used safely in a Lucene search
 var sanitise = function(str, withquotes) {
@@ -101,12 +109,19 @@ var disableAllCheckBoxes = function() {
 }
 
 
+
 // perform a search for 'searchText' and optionally apply filters where
 // filter is an object like {topic: "NoSQL", language: "HTTP"}
-var doSearch = function(searchText,filter, dontChangeURL, callback) {
+var doSearch = function(searchText,filter, dontChangeURL, callback, bookmark) {
   disableAllCheckBoxes();
   $('#clearfilters').hide();
   $('#loading').show();
+
+  lastsearch.searchText
+  lastsearch.filter = filter
+  lastsearch.dontChangeURL = dontChangeURL
+  lastsearch.bookmark = bookmark
+
   var q = "";
   var sort = null;
   if(searchText.length>0) {
@@ -130,7 +145,7 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
   
   // render the query and filter
   $('#qs').html(q);  
-  var limit = $('#searchtext').data("limit") || 25;      
+  var limit = $('#searchtext').data("limit") || 25;
   var qs = {
       q:q,
       limit:limit,
@@ -142,6 +157,12 @@ var doSearch = function(searchText,filter, dontChangeURL, callback) {
     $('#sort').html("Sort = " + sort);
   } else {
     $('#sort').html("");
+  }
+  if (bookmark) {
+    qs.bookmark = bookmark;
+    lastsearch.page += limit
+  } else {
+    lastsearch.page = 0
   }
   var obj = {
     url: "https://search-service.mybluemix.net/search",
@@ -209,9 +230,32 @@ var renderSerps = function(data, filter) {
   renderedSerps = data;
   var html = "";
     
-  if(!data.rows || data.rows.length == 0 )  {
+  if(!lastsearch.page && (!data.rows || data.rows.length == 0))  {
     html = '<div class="jumbotron"><h3>There are no results to match you search criteria. Please try again</h3></div>';
   } else {
+    if (!data.rows || data.rows.length == 0 || data.rows.length == data.total_rows || lastsearch.page >= data.total_rows) {
+      $('#nextpagebutton').hide()
+    } else if (data.bookmark) {
+      if ($('#nextpagebutton')[0]) {
+        $('#nextpagebutton').show()
+      } else {
+        var nextPage = $('#searchtext').data("nextPage")
+        if (nextPage) {
+          $('#results').after('<button id="nextpagebutton">' + nextPage + '</button>')
+          $("#nextpagebutton").click(function(e) {
+            $(this).attr('disabled', true)
+            var b = $(this).data('bookmark')
+            doSearch(lastsearch.searchText, lastsearch.filter, lastsearch.dontChangeURL, function(err, data) {
+              $("#nextpagebutton").attr('disabled', false)
+              renderSerps(data, filter);
+            }, b);
+          })
+        }
+      }
+
+      $('#nextpagebutton').data('bookmark', data.bookmark)
+    }
+
     var extraURLS = [ 
        { title: "Github", element: "githuburl", icon: "fa-github-square", color: "label-default"},
        { title: "Video", element: "videourl", icon: "fa-video-camera", color: "label-warning", type:"Video"},
@@ -314,7 +358,11 @@ var renderSerps = function(data, filter) {
   }
     
 
-  $('#results').html(html);
+  if (lastsearch.page > 0) {
+    $('#results').append(html);
+  } else {
+    $('#results').html(html);
+  }
   
   //Reset the tracking for these elements
   if ( typeof _paq !== 'undefined' ){
